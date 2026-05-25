@@ -31,15 +31,22 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // 2. Resolve user role
+    // 2. Resolve user role and check business details
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
-      .select('role, tokens')
+      .select('role, tokens, business_name, business_phone, abn, business_address')
       .eq('id', user.id)
       .single()
 
     if (profileError || !profile || profile.role !== 'seller') {
       return NextResponse.json({ error: 'Forbidden: Only sellers can create listings' }, { status: 403 })
+    }
+
+    // Enforce business details completion
+    if (!profile.business_name || !profile.business_phone || !profile.abn || !profile.business_address) {
+      return NextResponse.json({ 
+        error: 'Forbidden: You must complete your business profile details (Business Name, Phone, ABN, and Address) before creating listings.' 
+      }, { status: 400 })
     }
 
     // 3. Parse and validate body

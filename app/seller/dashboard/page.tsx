@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/server'
 import { TokenBadge } from '@/components/shared/TokenBadge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { BusinessProfileCard } from '@/components/listings/BusinessProfileCard'
 import { 
   PlusCircle, 
   ListTodo, 
@@ -13,7 +14,8 @@ import {
   XCircle,
   FileSpreadsheet,
   Coins,
-  History
+  History,
+  Building2
 } from 'lucide-react'
 
 export const revalidate = 0 // Disable cache for dashboard
@@ -70,6 +72,13 @@ export default async function SellerDashboardPage() {
   const pendingListings = listings?.filter(l => l.status === 'pending').length || 0
   const rejectedListings = listings?.filter(l => l.status === 'rejected').length || 0
 
+  const hasBusinessDetails = !!(
+    profile.business_name &&
+    profile.business_phone &&
+    profile.abn &&
+    profile.business_address
+  )
+
   return (
     <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8 bg-background">
       {/* Header Section */}
@@ -90,6 +99,20 @@ export default async function SellerDashboardPage() {
           </Link>
         </div>
       </div>
+
+      {!hasBusinessDetails && (
+        <Card className="border-amber-500/30 bg-amber-500/5 text-amber-800 animate-in fade-in duration-200">
+          <CardContent className="flex items-start gap-3 p-4">
+            <Building2 className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+            <div className="space-y-1 text-sm">
+              <h4 className="font-bold">Business Profile Setup Required</h4>
+              <p className="text-amber-800/80">
+                You must complete your business details before you can build and publish listings. Configure your profile in the sidebar below.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Stats Section */}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
@@ -211,45 +234,49 @@ export default async function SellerDashboardPage() {
           )}
         </div>
 
-        {/* Token History Audit Log */}
-        <div className="space-y-4">
-          <h2 className="text-xl font-medium tracking-tight flex items-center gap-2 border-b pb-3 border-border/40 text-foreground">
-            <History className="h-5 w-5 text-foreground" />
-            Token History
-          </h2>
+        {/* Sidebar Info */}
+        <div className="space-y-6">
+          <BusinessProfileCard profile={profile} />
 
-          <Card className="border-border bg-card shadow-none rounded-lg">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Recent Transactions</CardTitle>
-              <CardDescription>Audited records of your listing credits</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {transactions.length === 0 ? (
-                <p className="text-sm text-muted-foreground text-center py-6">
-                  No token transactions recorded yet.
-                </p>
-              ) : (
-                <div className="space-y-4">
-                  {transactions.map((tx) => {
-                    const isPositive = tx.delta > 0
-                    return (
-                      <div key={tx.id} className="flex items-start justify-between gap-3 text-sm">
-                        <div className="space-y-0.5">
-                          <p className="font-medium leading-none">{tx.reason || 'Token adjustment'}</p>
-                          <span className="text-[10px] text-muted-foreground">
-                            {new Date(tx.created_at).toLocaleString()}
-                          </span>
+          <div className="space-y-4">
+            <h2 className="text-xl font-medium tracking-tight flex items-center gap-2 border-b pb-3 border-border/40 text-foreground">
+              <History className="h-5 w-5 text-foreground" />
+              Token History
+            </h2>
+
+            <Card className="border-border bg-card shadow-none rounded-lg">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Recent Transactions</CardTitle>
+                <CardDescription>Audited records of your listing credits</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {transactions.length === 0 ? (
+                  <p className="text-sm text-muted-foreground text-center py-6">
+                    No token transactions recorded yet.
+                  </p>
+                ) : (
+                  <div className="space-y-4">
+                    {transactions.map((tx) => {
+                      const isPositive = tx.delta > 0
+                      return (
+                        <div key={tx.id} className="flex items-start justify-between gap-3 text-sm">
+                          <div className="space-y-0.5">
+                            <p className="font-medium leading-none">{tx.reason || 'Token adjustment'}</p>
+                            <span className="text-[10px] text-muted-foreground">
+                              {new Date(tx.created_at).toLocaleString()}
+                            </span>
+                          </div>
+                          <div className={`font-bold tabular-nums whitespace-nowrap ${isPositive ? 'text-green-600' : 'text-destructive'}`}>
+                            {isPositive ? `+${tx.delta}` : tx.delta}
+                          </div>
                         </div>
-                        <div className={`font-bold tabular-nums whitespace-nowrap ${isPositive ? 'text-green-600' : 'text-destructive'}`}>
-                          {isPositive ? `+${tx.delta}` : tx.delta}
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                      )
+                    })}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
