@@ -34,7 +34,7 @@ export function ListingForm({ initialTokens, userId }: ListingFormProps) {
   // Basic Details
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [category, setCategory] = useState('driver')
+  const [category, setCategory] = useState('mc')
 
   // Dynamic Fields
   const [fields, setFields] = useState<DynamicField[]>([
@@ -195,17 +195,19 @@ export function ListingForm({ initialTokens, userId }: ListingFormProps) {
             
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
-                <Label htmlFor="category">Category</Label>
+                <Label htmlFor="category">Required Licence Class</Label>
                 <Select value={category} onValueChange={(val) => { if (val) setCategory(val) }}>
                   <SelectTrigger className="bg-background cursor-pointer">
-                    <SelectValue placeholder="Select category" />
+                    <SelectValue placeholder="Select licence class" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem className="cursor-pointer" value="driver">Driver</SelectItem>
-                    <SelectItem className="cursor-pointer" value="event">Event Help</SelectItem>
-                    <SelectItem className="cursor-pointer" value="service">Service Listing</SelectItem>
-                    <SelectItem className="cursor-pointer" value="real_estate">Real Estate</SelectItem>
-                    <SelectItem className="cursor-pointer" value="other">Other</SelectItem>
+                    <SelectItem className="cursor-pointer" value="mc">Multi Combination (MC)</SelectItem>
+                    <SelectItem className="cursor-pointer" value="hc">Heavy Combination (HC)</SelectItem>
+                    <SelectItem className="cursor-pointer" value="hr">Heavy Rigid (HR)</SelectItem>
+                    <SelectItem className="cursor-pointer" value="mr">Medium Rigid (MR)</SelectItem>
+                    <SelectItem className="cursor-pointer" value="lr">Light Rigid (LR)</SelectItem>
+                    <SelectItem className="cursor-pointer" value="car">Car Licence (C)</SelectItem>
+                    <SelectItem className="cursor-pointer" value="other">Other / Specialized</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

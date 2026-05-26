@@ -77,13 +77,26 @@ export default async function ListingDetailPage({ params }: PageProps) {
 
   // Category-specific badge styles using the report palette from DESIGN.md
   const categoryStyles: Record<string, string> = {
-    driver: 'bg-[#65b5ff]/10 text-[#006bd6] border-[#65b5ff]/20', // report-blue
-    event: 'bg-[#0bdf50]/10 text-[#079c37] border-[#0bdf50]/20', // report-green
-    service: 'bg-fin-orange/10 text-fin-orange border-fin-orange/20', // fin-orange
-    real_estate: 'bg-[#03b2cb]/10 text-[#028194] border-[#03b2cb]/20', // report-cyan
-    other: 'bg-[#ff2067]/10 text-[#cc0044] border-[#ff2067]/20', // report-pink
+    mc: 'bg-[#65b5ff]/10 text-[#006bd6] border-[#65b5ff]/20', // report-blue
+    hc: 'bg-[#0bdf50]/10 text-[#079c37] border-[#0bdf50]/20', // report-green
+    hr: 'bg-[#03b2cb]/10 text-[#028194] border-[#03b2cb]/20', // report-cyan
+    mr: 'bg-fin-orange/10 text-fin-orange border-fin-orange/20', // fin-orange
+    lr: 'bg-[#ff2067]/10 text-[#cc0044] border-[#ff2067]/20', // report-pink
+    car: 'bg-[#8b5cf6]/10 text-[#6d28d9] border-[#8b5cf6]/20', // purple
+    other: 'bg-muted text-muted-foreground border-border',
   }
   const badgeStyle = categoryStyles[listing.category] || categoryStyles.other
+
+  const categoryLabels: Record<string, string> = {
+    mc: 'MC Licence Required',
+    hc: 'HC Licence Required',
+    hr: 'HR Licence Required',
+    mr: 'MR Licence Required',
+    lr: 'LR Licence Required',
+    car: 'Car Licence (C)',
+    other: 'Specialized Licence',
+  }
+  const categoryLabel = categoryLabels[listing.category] || (listing.category.toUpperCase() + ' Licence')
 
   return (
     <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
@@ -100,8 +113,8 @@ export default async function ListingDetailPage({ params }: PageProps) {
         <div className="lg:col-span-7 space-y-6">
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <span className={`inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold capitalize ${badgeStyle}`}>
-                {listing.category.replace('_', ' ')}
+              <span className={`inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold ${badgeStyle}`}>
+                {categoryLabel}
               </span>
               <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                 <Calendar className="h-3.5 w-3.5" />

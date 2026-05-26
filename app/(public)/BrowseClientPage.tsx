@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react'
 import { ListingGrid } from '@/components/listings/ListingGrid'
 import { Input } from '@/components/ui/input'
-import { Search, Sparkles, SlidersHorizontal, Briefcase, Car, CalendarClock, Home, Layers } from 'lucide-react'
+import { Search, Sparkles, SlidersHorizontal, Car, Layers, Truck } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface Listing {
@@ -22,12 +22,14 @@ interface BrowseClientPageProps {
 }
 
 const CATEGORIES = [
-  { id: 'all', label: 'All Categories', icon: Layers },
-  { id: 'driver', label: 'Drivers', icon: Car },
-  { id: 'event', label: 'Events & Help', icon: CalendarClock },
-  { id: 'service', label: 'Services', icon: Briefcase },
-  { id: 'real_estate', label: 'Real Estate', icon: Home },
-  { id: 'other', label: 'Others', icon: Sparkles },
+  { id: 'all', label: 'All Licences', icon: Layers },
+  { id: 'mc', label: 'Multi Combination (MC)', icon: Truck },
+  { id: 'hc', label: 'Heavy Combination (HC)', icon: Truck },
+  { id: 'hr', label: 'Heavy Rigid (HR)', icon: Truck },
+  { id: 'mr', label: 'Medium Rigid (MR)', icon: Truck },
+  { id: 'lr', label: 'Light Rigid (LR)', icon: Truck },
+  { id: 'car', label: 'Car Licence (C)', icon: Car },
+  { id: 'other', label: 'Other Licences', icon: Sparkles },
 ]
 
 export default function BrowseClientPage({ initialListings }: BrowseClientPageProps) {
