@@ -20,6 +20,23 @@ interface DynamicField {
   options?: string[] // For select fields
 }
 
+const CATEGORY_LABELS: Record<string, string> = {
+  mc: 'Multi Combination (MC)',
+  hc: 'Heavy Combination (HC)',
+  hr: 'Heavy Rigid (HR)',
+  mr: 'Medium Rigid (MR)',
+  lr: 'Light Rigid (LR)',
+  car: 'Car Licence (C)',
+  other: 'Other / Specialized',
+}
+
+const FIELD_TYPE_LABELS: Record<string, string> = {
+  text: 'Text Input',
+  textarea: 'Textarea (Multiline)',
+  tel: 'Telephone Number',
+  select: 'Dropdown Menu',
+}
+
 interface ListingFormProps {
   initialTokens: number
   userId: string
@@ -198,7 +215,9 @@ export function ListingForm({ initialTokens, userId }: ListingFormProps) {
                 <Label htmlFor="category">Required Licence Class</Label>
                 <Select value={category} onValueChange={(val) => { if (val) setCategory(val) }}>
                   <SelectTrigger className="w-full bg-background cursor-pointer">
-                    <SelectValue placeholder="Select licence class" />
+                    <SelectValue placeholder="Select licence class">
+                      {category ? (CATEGORY_LABELS[category] || category) : undefined}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem className="cursor-pointer" value="mc">Multi Combination (MC)</SelectItem>
@@ -310,7 +329,9 @@ export function ListingForm({ initialTokens, userId }: ListingFormProps) {
                     onValueChange={(val: any) => setNewFieldType(val)}
                   >
                     <SelectTrigger className="w-full bg-background cursor-pointer">
-                      <SelectValue />
+                      <SelectValue>
+                        {newFieldType ? (FIELD_TYPE_LABELS[newFieldType] || newFieldType) : undefined}
+                      </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem className="cursor-pointer" value="text">Text Input</SelectItem>

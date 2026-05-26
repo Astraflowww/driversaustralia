@@ -25,6 +25,13 @@ import { cn } from '@/lib/utils'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
 
+const statusLabels: Record<string, string> = {
+  all: 'All Postings',
+  pending: 'Pending Moderation',
+  approved: 'Approved Listings',
+  rejected: 'Rejected Listings',
+}
+
 interface Listing {
   id: string
   title: string
@@ -89,7 +96,9 @@ export function ListingApprovalTable({ initialListings }: ListingApprovalTablePr
           <Label className="text-sm font-semibold shrink-0">Filter Status:</Label>
           <Select value={statusFilter} onValueChange={(val) => { if (val) setStatusFilter(val) }}>
             <SelectTrigger className="w-[180px] bg-background/50 cursor-pointer">
-              <SelectValue />
+              <SelectValue>
+                {statusFilter ? (statusLabels[statusFilter] || statusFilter) : undefined}
+              </SelectValue>
             </SelectTrigger>
             <SelectContent>
               <SelectItem className="cursor-pointer" value="all">All Postings</SelectItem>

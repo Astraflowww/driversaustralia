@@ -11,6 +11,11 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
+const roleLabels: Record<string, string> = {
+  buyer: 'Buyer (Respond to listings)',
+  seller: 'Seller (Post listings - starts with 3 tokens)',
+}
+
 export default function RegisterPage() {
   const router = useRouter()
   
@@ -133,7 +138,9 @@ export default function RegisterPage() {
                   }}
                 >
                   <SelectTrigger className="bg-background/80 w-full cursor-pointer">
-                    <SelectValue placeholder="Select account type" />
+                    <SelectValue placeholder="Select account type">
+                      {role ? (roleLabels[role] || role) : undefined}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem className="cursor-pointer" value="buyer">Buyer (Respond to listings)</SelectItem>

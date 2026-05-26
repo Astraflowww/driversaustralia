@@ -26,6 +26,13 @@ import { TokenBadge } from '@/components/shared/TokenBadge'
 import { Search, Coins, Plus, Minus, UserCog, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+const roleFilterLabels: Record<string, string> = {
+  all: 'All Roles',
+  seller: 'Sellers Only',
+  buyer: 'Buyers Only',
+  admin: 'Admins Only',
+}
+
 interface Profile {
   id: string
   email: string
@@ -147,7 +154,9 @@ export function TokenManager({ users, currentAdminId }: TokenManagerProps) {
           <Label className="text-sm font-semibold shrink-0">Filter Role:</Label>
           <Select value={roleFilter} onValueChange={(val) => { if (val) setRoleFilter(val) }}>
             <SelectTrigger className="w-[150px] bg-background/50 cursor-pointer">
-              <SelectValue />
+              <SelectValue>
+                {roleFilter ? (roleFilterLabels[roleFilter] || roleFilter) : undefined}
+              </SelectValue>
             </SelectTrigger>
             <SelectContent>
               <SelectItem className="cursor-pointer" value="all">All Roles</SelectItem>
