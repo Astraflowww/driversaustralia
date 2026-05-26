@@ -15,8 +15,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Drivers Australia — Dynamic Listing Portal",
-  description: "A premium form-based listing portal MVP connecting buyers and sellers.",
+  title: "Drivers Australia — Marketplace & Job Board",
+  description: "Drivers Australia is a premium marketplace connecting sellers and drivers through custom dynamic forms and listings.",
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 export default async function RootLayout({
