@@ -197,7 +197,7 @@ export function ListingForm({ initialTokens, userId }: ListingFormProps) {
               <div className="space-y-1.5">
                 <Label htmlFor="category">Required Licence Class</Label>
                 <Select value={category} onValueChange={(val) => { if (val) setCategory(val) }}>
-                  <SelectTrigger className="bg-background cursor-pointer">
+                  <SelectTrigger className="w-full bg-background cursor-pointer">
                     <SelectValue placeholder="Select licence class" />
                   </SelectTrigger>
                   <SelectContent>
@@ -309,7 +309,7 @@ export function ListingForm({ initialTokens, userId }: ListingFormProps) {
                     value={newFieldType} 
                     onValueChange={(val: any) => setNewFieldType(val)}
                   >
-                    <SelectTrigger className="bg-background cursor-pointer">
+                    <SelectTrigger className="w-full bg-background cursor-pointer">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
