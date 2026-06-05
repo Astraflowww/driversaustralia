@@ -49,9 +49,9 @@ export default async function NewListingPage() {
       {/* Page Title */}
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b pb-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Create Dynamic Listing</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Create Job Listing</h1>
           <p className="text-muted-foreground mt-1">
-            Build custom application forms for drivers, event help, or any listing type.
+            Design custom screening questionnaires to capture licence validation and driving history.
           </p>
         </div>
         <div>
@@ -65,9 +65,9 @@ export default async function NewListingPage() {
             <CardContent className="flex items-start gap-3 p-4">
               <Building2 className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
               <div className="space-y-1 text-sm">
-                <h4 className="font-bold">Business Profile Setup Required</h4>
+                <h4 className="font-bold">Company Profile Details Required</h4>
                 <p className="text-amber-800/80">
-                  You must complete your business details before you can build and publish listings. Fill out the form below to configure your profile.
+                  Register your company information and ABN to start publishing driver job boards and custom pre-screening forms.
                 </p>
               </div>
             </CardContent>
@@ -82,9 +82,9 @@ export default async function NewListingPage() {
               <CardContent className="flex items-start gap-3 p-4">
                 <AlertCircle className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
                 <div className="space-y-1 text-sm">
-                  <h4 className="font-bold">Insufficient Tokens</h4>
+                  <h4 className="font-bold">No Credits Remaining</h4>
                   <p className="text-destructive/80">
-                    You have 0 tokens available. Posting a listing requires 1 token. Please contact the system administrator to obtain tokens.
+                    You have 0 active tokens. Creating a job listing requires 1 token credit. Contact support to request additional credits.
                   </p>
                 </div>
               </CardContent>

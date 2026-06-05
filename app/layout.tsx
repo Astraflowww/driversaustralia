@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { createClient } from "@/lib/supabase/server";
 import { Navbar } from "@/components/shared/Navbar";
+import { Footer } from "@/components/blocks/footer-section";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -73,9 +74,7 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <Navbar profile={profile as any} />
         <main className="flex-grow flex flex-col">{children}</main>
-        <footer className="border-t border-border/40 py-6 text-center text-xs text-muted-foreground bg-background/50 backdrop-blur-md">
-          © {new Date().getFullYear()} Drivers Australia. All rights reserved.
-        </footer>
+        <Footer />
       </body>
     </html>
   );

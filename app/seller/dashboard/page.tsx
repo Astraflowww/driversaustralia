@@ -84,9 +84,9 @@ export default async function SellerDashboardPage() {
       {/* Header Section */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b pb-4 border-border/40">
         <div>
-          <h1 className="text-3xl font-medium tracking-tight lg:tracking-[-0.8px] text-foreground">Seller Dashboard</h1>
+          <h1 className="text-3xl font-medium tracking-tight lg:tracking-[-0.8px] text-foreground">Transport Operator Dashboard</h1>
           <p className="text-muted-foreground mt-1">
-            Manage your dynamic listings, track submissions, and check your token transactions.
+            Manage active listings, track candidate applications, and monitor token transactions.
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -105,9 +105,9 @@ export default async function SellerDashboardPage() {
           <CardContent className="flex items-start gap-3 p-4">
             <Building2 className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
             <div className="space-y-1 text-sm">
-              <h4 className="font-bold">Business Profile Setup Required</h4>
+              <h4 className="font-bold">Operator Business Profile Setup Required</h4>
               <p className="text-amber-800/80">
-                You must complete your business details before you can build and publish listings. Configure your profile in the sidebar below.
+                Provide your company and ABN details to build custom questionnaires and publish driver listings. Configure your profile in the sidebar below.
               </p>
             </div>
           </CardContent>
@@ -118,7 +118,7 @@ export default async function SellerDashboardPage() {
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
         <Card className="border-border bg-card shadow-none rounded-lg">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Total Listings</CardTitle>
+            <CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Total Driver Jobs</CardTitle>
             <ListTodo className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -170,12 +170,12 @@ export default async function SellerDashboardPage() {
           {listings.length === 0 ? (
             <Card className="border-dashed border-2 flex flex-col items-center justify-center p-12 text-center border-border/65">
               <ListTodo className="h-10 w-10 text-muted-foreground/60 mb-4" />
-              <CardTitle className="text-lg font-medium">No listings yet</CardTitle>
+              <CardTitle className="text-lg font-medium">No Active Listings</CardTitle>
               <CardDescription className="mt-1 mb-6">
-                You haven&apos;t created any listings yet. Launch a dynamic listing to get started.
+                Create customized pre-screening forms and reach licensed drivers across Australia.
               </CardDescription>
               <Link href="/seller/listings/new">
-                <Button className="cursor-pointer">Create First Listing (-1 Token)</Button>
+                <Button className="cursor-pointer">Launch New Listing (-1 Token)</Button>
               </Link>
             </Card>
           ) : (
@@ -247,7 +247,7 @@ export default async function SellerDashboardPage() {
             <Card className="border-border bg-card shadow-none rounded-lg">
               <CardHeader className="pb-3">
                 <CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Recent Transactions</CardTitle>
-                <CardDescription>Audited records of your listing credits</CardDescription>
+                <CardDescription>Audit logs for posting and token credits.</CardDescription>
               </CardHeader>
               <CardContent>
                 {transactions.length === 0 ? (

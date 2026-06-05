@@ -85,11 +85,11 @@ export default async function AdminDashboardPage() {
             <div className="grid grid-cols-3 gap-2 text-center text-xs border-t pt-3 border-border/40">
               <div>
                 <p className="font-semibold text-foreground">{totalSellers}</p>
-                <p className="text-muted-foreground">Sellers</p>
+                <p className="text-muted-foreground">Business Owners</p>
               </div>
               <div>
                 <p className="font-semibold text-foreground">{totalBuyers}</p>
-                <p className="text-muted-foreground">Buyers</p>
+                <p className="text-muted-foreground">Drivers</p>
               </div>
               <div>
                 <p className="font-semibold text-foreground">{totalAdmins}</p>
@@ -151,7 +151,7 @@ export default async function AdminDashboardPage() {
           <CardHeader>
             <CardTitle className="text-lg font-medium tracking-tight">Listings Moderation</CardTitle>
             <CardDescription>
-              Review pending listings created by sellers. Approve postings to make them public.
+              Review pending listings created by business owners. Approve postings to make them public.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex items-center justify-between">
@@ -174,7 +174,7 @@ export default async function AdminDashboardPage() {
           <CardHeader>
             <CardTitle className="text-lg font-medium tracking-tight">Token Manager</CardTitle>
             <CardDescription>
-              Grant or deduct listing credits for sellers. Oversee user accounts and balances.
+              Grant or deduct listing credits for business owners. Oversee user accounts and balances.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex items-center justify-between">

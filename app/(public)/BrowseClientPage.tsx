@@ -67,19 +67,15 @@ export default function BrowseClientPage({ initialListings }: BrowseClientPagePr
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
           <span className="inline-flex items-center gap-1.5 rounded-md bg-fin-orange/10 border border-fin-orange/20 px-3.5 py-1 text-xs font-medium text-fin-orange">
             <Sparkles className="h-3.5 w-3.5" />
-            Discover Local Opportunities
+            Explore Active Driver Openings
           </span>
 
-          <h1 className="text-4xl font-medium tracking-tight sm:text-6xl max-w-3xl mx-auto leading-tight text-foreground lg:tracking-[-1.4px]">
-            Connecting Talent with{' '}
+          <h1 className="text-4xl font-medium tracking-tight sm:text-6xl max-w-4xl mx-auto leading-tight text-foreground lg:tracking-[-1.4px]">
+            Connecting Talented Drivers with{' '}
             <span className="text-fin-orange">
-              Dynamic Forms
+              Transport Opportunities
             </span>
           </h1>
-
-          <p className="text-muted-foreground max-w-xl mx-auto text-base sm:text-lg">
-            Sellers create custom questions to get exactly the info they need. Buyers apply in seconds with zero friction.
-          </p>
 
           {/* Search bar wrapper */}
           <div className="max-w-xl mx-auto relative pt-4">
@@ -87,7 +83,7 @@ export default function BrowseClientPage({ initialListings }: BrowseClientPagePr
               <Search className="h-5 w-5 text-muted-foreground mr-2 shrink-0" />
               <Input
                 type="text"
-                placeholder="Search listings by title, keywords or description..."
+                placeholder="Search opportunities by licence class, route, or keyword..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent py-4 text-sm md:text-base w-full shadow-none"
@@ -105,7 +101,7 @@ export default function BrowseClientPage({ initialListings }: BrowseClientPagePr
             <div className="flex items-center gap-2 border-b pb-3 border-border/40">
               <SlidersHorizontal className="h-4.5 w-4.5 text-foreground" />
               <h2 className="font-medium text-sm uppercase tracking-wider text-foreground">
-                Filter Listings
+                Licence Classification
               </h2>
             </div>
 
@@ -151,7 +147,7 @@ export default function BrowseClientPage({ initialListings }: BrowseClientPagePr
             <div className="flex items-center justify-between border-b pb-3">
               <h3 className="font-bold text-lg text-foreground">
                 {selectedCategory === 'all'
-                  ? 'All Postings'
+                  ? 'Active Job Board'
                   : CATEGORIES.find((c) => c.id === selectedCategory)?.label}
               </h3>
               <p className="text-xs text-muted-foreground font-semibold">

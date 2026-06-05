@@ -28,8 +28,8 @@ import { cn } from '@/lib/utils'
 
 const roleFilterLabels: Record<string, string> = {
   all: 'All Roles',
-  seller: 'Sellers Only',
-  buyer: 'Buyers Only',
+  seller: 'Business Owners Only',
+  buyer: 'Drivers Only',
   admin: 'Admins Only',
 }
 
@@ -160,8 +160,8 @@ export function TokenManager({ users, currentAdminId }: TokenManagerProps) {
             </SelectTrigger>
             <SelectContent>
               <SelectItem className="cursor-pointer" value="all">All Roles</SelectItem>
-              <SelectItem className="cursor-pointer" value="seller">Sellers Only</SelectItem>
-              <SelectItem className="cursor-pointer" value="buyer">Buyers Only</SelectItem>
+              <SelectItem className="cursor-pointer" value="seller">Business Owners Only</SelectItem>
+              <SelectItem className="cursor-pointer" value="buyer">Drivers Only</SelectItem>
               <SelectItem className="cursor-pointer" value="admin">Admins Only</SelectItem>
             </SelectContent>
           </Select>
@@ -215,7 +215,7 @@ export function TokenManager({ users, currentAdminId }: TokenManagerProps) {
                     {user.role === 'seller' ? (
                       <TokenBadge tokens={user.tokens} />
                     ) : (
-                      <span className="text-xs text-muted-foreground/60 italic">N/A (Non-seller)</span>
+                      <span className="text-xs text-muted-foreground/60 italic">N/A (Non-Business Owner)</span>
                     )}
                   </TableCell>
                   <TableCell className="py-4 text-right">
@@ -277,7 +277,7 @@ export function TokenManager({ users, currentAdminId }: TokenManagerProps) {
                   {user.role === 'seller' ? (
                     <TokenBadge tokens={user.tokens} />
                   ) : (
-                    <span className="text-xs text-muted-foreground/60 italic">N/A (Non-seller)</span>
+                    <span className="text-xs text-muted-foreground/60 italic">N/A (Non-Business Owner)</span>
                   )}
                 </div>
 

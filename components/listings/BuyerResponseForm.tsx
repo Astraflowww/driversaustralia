@@ -117,7 +117,7 @@ export function BuyerResponseForm({ listingId, fields }: BuyerResponseFormProps)
           </div>
           <h3 className="text-xl font-medium tracking-tight text-green-600">Application Submitted!</h3>
           <p className="text-sm text-muted-foreground max-w-sm">
-            Thank you for applying. Your details have been submitted to the seller and are awaiting review.
+            Thank you for applying. Your details have been submitted to the business owner and are awaiting review.
           </p>
         </CardContent>
       </Card>

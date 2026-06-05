@@ -102,12 +102,12 @@ export default async function ListingResponsesPage({ params }: PageProps) {
           </span>
           <h1 className="text-3xl font-bold tracking-tight">{listing.title}</h1>
           <p className="text-muted-foreground mt-1">
-            Browse buyer responses and dynamically filled out form details.
+            Review applicant driver details, qualifications, and question responses.
           </p>
         </div>
         <div className="text-right">
           <div className="text-3xl font-extrabold text-primary">{responses?.length || 0}</div>
-          <div className="text-xs text-muted-foreground uppercase font-bold tracking-wider">Total Responses</div>
+          <div className="text-xs text-muted-foreground uppercase font-bold tracking-wider">Total Applications</div>
         </div>
       </div>
 
@@ -115,9 +115,9 @@ export default async function ListingResponsesPage({ params }: PageProps) {
       {responses.length === 0 ? (
         <Card className="border-dashed border-2 flex flex-col items-center justify-center p-12 text-center bg-background/50">
           <FileText className="h-10 w-10 text-muted-foreground/60 mb-4" />
-          <CardTitle className="text-lg font-medium">No responses yet</CardTitle>
+          <CardTitle className="text-lg font-medium">No Applications Yet</CardTitle>
           <CardDescription className="mt-1">
-            Applications submitted by buyers will appear here in real time.
+            Driver responses will appear here as soon as they are submitted.
           </CardDescription>
         </Card>
       ) : (
@@ -128,7 +128,7 @@ export default async function ListingResponsesPage({ params }: PageProps) {
               <TableHeader className="bg-muted/40">
                 <TableRow>
                   <TableHead className="font-semibold text-muted-foreground py-4">Submitted At</TableHead>
-                  <TableHead className="font-semibold text-muted-foreground py-4">Buyer Account</TableHead>
+                  <TableHead className="font-semibold text-muted-foreground py-4">Driver Profile</TableHead>
                   {schema.map((field) => (
                     <TableHead key={field.id} className="font-semibold text-muted-foreground py-4">
                       {field.label}
@@ -150,14 +150,14 @@ export default async function ListingResponsesPage({ params }: PageProps) {
                         {buyerProfile ? (
                           <div className="flex flex-col">
                             <span className="font-semibold text-sm">
-                              {buyerProfile.full_name || 'Anonymous Buyer'}
+                              {buyerProfile.full_name || 'Anonymous Driver'}
                             </span>
                             <span className="text-[10px] text-muted-foreground">
                               {buyerProfile.email}
                             </span>
                           </div>
                         ) : (
-                          <span className="text-sm text-muted-foreground italic">Guest</span>
+                          <span className="text-sm text-muted-foreground italic">Guest Applicant</span>
                         )}
                       </TableCell>
                       {schema.map((field) => {
@@ -196,7 +196,7 @@ export default async function ListingResponsesPage({ params }: PageProps) {
                       <div className="flex items-center gap-2 mt-2">
                         <User className="h-4 w-4 text-primary" />
                         <div>
-                          <p className="text-sm font-semibold">{buyerProfile.full_name || 'Anonymous Buyer'}</p>
+                          <p className="text-sm font-semibold">{buyerProfile.full_name || 'Anonymous Driver'}</p>
                           <p className="text-[10px] text-muted-foreground">{buyerProfile.email}</p>
                         </div>
                       </div>
