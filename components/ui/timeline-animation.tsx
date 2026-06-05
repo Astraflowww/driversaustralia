@@ -55,7 +55,7 @@ export const TimelineContent = React.forwardRef<HTMLElement, TimelineContentProp
       }),
     };
 
-    const MotionComponent = motion[as as keyof typeof motion] || motion.div;
+    const MotionComponent = (motion as any)[as] || motion.div;
 
     return (
       <MotionComponent

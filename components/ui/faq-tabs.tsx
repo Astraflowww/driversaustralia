@@ -5,6 +5,34 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+type FAQItem = {
+  question: string;
+  answer: string;
+};
+
+type FAQProps = React.ComponentPropsWithoutRef<'section'> & {
+  title?: string;
+  subtitle?: string;
+  categories: Record<string, string>;
+  faqData: Record<string, FAQItem[]>;
+  className?: string;
+};
+
+type FAQHeaderProps = Pick<FAQProps, 'title' | 'subtitle'>;
+
+type FAQTabsProps = {
+  categories: Record<string, string>;
+  selected: string;
+  setSelected: (category: string) => void;
+};
+
+type FAQListProps = {
+  faqData: Record<string, FAQItem[]>;
+  selected: string;
+};
+
+type FAQItemProps = FAQItem;
+
 // Main reusable FAQ component
 export const FAQ = ({ 
   title = "FAQs",
@@ -13,7 +41,7 @@ export const FAQ = ({
   faqData,
   className,
   ...props 
-}) => {
+}: FAQProps) => {
   const categoryKeys = Object.keys(categories);
   const [selectedCategory, setSelectedCategory] = useState(categoryKeys[0]);
 
@@ -39,7 +67,7 @@ export const FAQ = ({
   );
 };
 
-const FAQHeader = ({ title, subtitle }) => (
+const FAQHeader = ({ title, subtitle }: FAQHeaderProps) => (
   <div className="relative z-10 flex flex-col items-center justify-center">
     <span className="mb-8 bg-gradient-to-r from-primary to-primary/60 bg-clip-text font-medium text-transparent">
       {subtitle}
@@ -49,7 +77,7 @@ const FAQHeader = ({ title, subtitle }) => (
   </div>
 );
 
-const FAQTabs = ({ categories, selected, setSelected }) => (
+const FAQTabs = ({ categories, selected, setSelected }: FAQTabsProps) => (
   <div className="relative z-10 flex flex-wrap items-center justify-center gap-4">
     {Object.entries(categories).map(([key, label]) => (
       <button
@@ -79,7 +107,7 @@ const FAQTabs = ({ categories, selected, setSelected }) => (
   </div>
 );
 
-const FAQList = ({ faqData, selected }) => (
+const FAQList = ({ faqData, selected }: FAQListProps) => (
   <div className="mx-auto mt-12 max-w-3xl">
     <AnimatePresence mode="wait">
       {Object.entries(faqData).map(([category, questions]) => {
@@ -105,7 +133,7 @@ const FAQList = ({ faqData, selected }) => (
   </div>
 );
 
-const FAQItem = ({ question, answer }) => {
+const FAQItem = ({ question, answer }: FAQItemProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
