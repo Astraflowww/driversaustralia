@@ -1,14 +1,22 @@
 import React from 'react'
 import { createClient } from '@/lib/supabase/server'
-import { ListingGrid } from '@/components/listings/ListingGrid'
 import BrowseClientPage from './BrowseClientPage'
+import LandingPage from '@/components/landing/LandingPage'
 
 export const revalidate = 0 // Dynamic page
 
 export default async function BrowsePage() {
   const supabase = await createClient()
 
-  // Fetch approved listings with seller names
+  // Retrieve authenticated user
+  const { data: { user } } = await supabase.auth.getUser()
+
+  // If user is not logged in, render the CRO landing page
+  if (!user) {
+    return <LandingPage />
+  }
+
+  // If logged in, fetch approved listings for the webapp
   const { data: listingsData } = await supabase
     .from('listings')
     .select(`

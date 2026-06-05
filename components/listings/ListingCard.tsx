@@ -85,7 +85,7 @@ export function ListingCard({
       rating={rating}
       title={title}
       dateRange={formattedDate}
-      hostType={sellerName || 'Anonymous Seller'}
+      hostType={sellerName || 'Anonymous Business Owner'}
       isTopRated={title.length % 5 === 0} // Feature a few listings dynamically
       description={description || 'No description provided.'}
       pricePerNight={0} // Handled dynamically in PlaceCard

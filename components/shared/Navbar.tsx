@@ -76,6 +76,18 @@ export function Navbar({ profile }: NavbarProps) {
               >
                 Browse
               </Link>
+              <Link
+                href="/pricing"
+                className="text-sm font-medium px-3 py-2 rounded-lg hover:bg-secondary text-muted-foreground hover:text-foreground transition-all duration-200"
+              >
+                Pricing
+              </Link>
+              <Link
+                href="/faq"
+                className="text-sm font-medium px-3 py-2 rounded-lg hover:bg-secondary text-muted-foreground hover:text-foreground transition-all duration-200"
+              >
+                FAQ
+              </Link>
 
               {role === 'seller' && (
                 <>
@@ -137,7 +149,7 @@ export function Navbar({ profile }: NavbarProps) {
                     {profile.full_name || 'User'}
                   </span>
                   <span className="text-[10px] text-muted-foreground capitalize">
-                    {role}
+                    {role === 'seller' ? 'Business Owner' : role === 'buyer' ? 'Driver' : role}
                   </span>
                 </div>
 
@@ -198,6 +210,20 @@ export function Navbar({ profile }: NavbarProps) {
             >
               Browse
             </Link>
+            <Link
+              href="/pricing"
+              onClick={() => setIsOpen(false)}
+              className="block rounded-lg px-3 py-2 text-base font-medium hover:bg-secondary"
+            >
+              Pricing
+            </Link>
+            <Link
+              href="/faq"
+              onClick={() => setIsOpen(false)}
+              className="block rounded-lg px-3 py-2 text-base font-medium hover:bg-secondary"
+            >
+              FAQ
+            </Link>
 
             {role === 'seller' && (
               <>
@@ -206,7 +232,7 @@ export function Navbar({ profile }: NavbarProps) {
                   onClick={() => setIsOpen(false)}
                   className="block rounded-lg px-3 py-2 text-base font-medium hover:bg-secondary"
                 >
-                  Seller Dashboard
+                  Operator Dashboard
                 </Link>
                 <Link
                   href="/seller/listings/new"

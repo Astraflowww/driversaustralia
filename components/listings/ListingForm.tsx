@@ -113,7 +113,7 @@ export function ListingForm({ initialTokens, userId }: ListingFormProps) {
     }
 
     if (fields.length === 0) {
-      setError('Please add at least one response field for buyers to fill out.')
+      setError('Please add at least one response field for drivers to fill out.')
       return
     }
 
@@ -262,7 +262,7 @@ export function ListingForm({ initialTokens, userId }: ListingFormProps) {
               <Plus className="h-5 w-5 text-foreground" />
               Dynamic Response Form Builder
             </CardTitle>
-            <CardDescription>Design the questions buyers will answer when applying.</CardDescription>
+            <CardDescription>Design the questions drivers will answer when applying.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Added Fields List */}
@@ -414,7 +414,7 @@ export function ListingForm({ initialTokens, userId }: ListingFormProps) {
       <div className={cn("lg:col-span-5 space-y-4", activeTab !== 'preview' && "hidden lg:block")}>
         <h2 className="text-xl font-medium tracking-tight flex items-center gap-2 text-foreground">
           <Eye className="h-5 w-5 text-foreground" />
-          Buyer View Live Preview
+          Driver View Live Preview
         </h2>
         
         <Card className="border-border bg-card shadow-none rounded-lg overflow-hidden sticky top-24">
@@ -432,7 +432,7 @@ export function ListingForm({ initialTokens, userId }: ListingFormProps) {
           
           <CardContent className="p-6 space-y-4">
             <h4 className="font-semibold text-sm text-foreground uppercase tracking-wider mb-2 border-b border-border/40 pb-1">
-              Apply Form (Buyer response)
+              Apply Form (Driver response)
             </h4>
 
             {fields.map((field) => (

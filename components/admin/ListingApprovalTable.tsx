@@ -122,7 +122,7 @@ export function ListingApprovalTable({ initialListings }: ListingApprovalTablePr
           <TableHeader className="bg-muted/40">
             <TableRow>
               <TableHead className="font-semibold text-muted-foreground py-4">Listing Details</TableHead>
-              <TableHead className="font-semibold text-muted-foreground py-4">Seller Details</TableHead>
+              <TableHead className="font-semibold text-muted-foreground py-4">Business Owner Details</TableHead>
               <TableHead className="font-semibold text-muted-foreground py-4">Current Status</TableHead>
               <TableHead className="font-semibold text-muted-foreground py-4 text-right">Actions</TableHead>
             </TableRow>
@@ -304,7 +304,7 @@ export function ListingApprovalTable({ initialListings }: ListingApprovalTablePr
 
                 <div className="border-t border-border/30 pt-3 flex items-center justify-between gap-4">
                   <div className="flex flex-col text-left">
-                    <span className="text-[9px] text-muted-foreground uppercase font-bold tracking-wider">Seller</span>
+                    <span className="text-[9px] text-muted-foreground uppercase font-bold tracking-wider">Business Owner</span>
                     <span className="font-semibold text-xs text-foreground truncate max-w-[120px]">
                       {seller?.full_name || 'Anonymous'}
                     </span>

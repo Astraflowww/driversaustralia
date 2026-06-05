@@ -59,9 +59,9 @@ export default async function ListingDetailPage({ params }: PageProps) {
       return (
         <div className="mx-auto max-w-7xl px-4 py-16">
           <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-6 text-center max-w-md mx-auto space-y-3">
-            <h3 className="font-bold text-amber-600 dark:text-amber-400">Listing Pending Review</h3>
+            <h3 className="font-bold text-amber-600 dark:text-amber-400">Listing Awaiting Moderation</h3>
             <p className="text-sm text-muted-foreground">
-              This listing has not been approved by the moderator yet. Please try again later.
+              This listing is currently in the review queue. Transport operators will be able to receive applications once approved.
             </p>
             <Link href="/" className="inline-block mt-2">
               <span className="text-sm font-semibold text-primary hover:underline">Back to Browse</span>
@@ -134,9 +134,9 @@ export default async function ListingDetailPage({ params }: PageProps) {
           </div>
 
           <div className="border-t border-border/40 pt-6">
-            <h3 className="text-lg font-medium mb-4 text-foreground tracking-tight">Job Description / Overview</h3>
+            <h3 className="text-lg font-medium mb-4 text-foreground tracking-tight">Position Overview & Licence Requirements</h3>
             <div className="prose max-w-none text-muted-foreground whitespace-pre-wrap leading-relaxed text-sm md:text-base">
-              {listing.description || 'No description provided.'}
+              {listing.description || 'No details provided.'}
             </div>
           </div>
 
@@ -148,12 +148,12 @@ export default async function ListingDetailPage({ params }: PageProps) {
                   <User className="h-5 w-5" />
                 </div>
                 <div className="space-y-0.5">
-                  <p className="text-[10px] text-muted-foreground uppercase font-semibold tracking-wider">Posted By</p>
+                  <p className="text-[10px] text-muted-foreground uppercase font-semibold tracking-wider">Transport Operator</p>
                   <p className="font-semibold text-foreground text-base">
-                    {sellerProfile?.full_name || 'Anonymous Seller'}
+                    {sellerProfile?.full_name || 'Anonymous Operator'}
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    Verified Seller Account
+                    Verified Operator Member
                   </p>
                 </div>
               </CardContent>
@@ -167,10 +167,10 @@ export default async function ListingDetailPage({ params }: PageProps) {
             <CardHeader className="bg-muted/30 border-b pb-4">
               <CardTitle className="text-lg font-medium tracking-tight text-foreground flex items-center gap-2">
                 <Sparkles className="h-4.5 w-4.5 text-fin-orange" />
-                Apply for this role
+                Submit Candidate Response
               </CardTitle>
               <CardDescription>
-                Fill out the seller&apos;s custom questionnaire below to submit your details.
+                Complete the operator&apos;s verification questionnaire to send your response directly.
               </CardDescription>
             </CardHeader>
             <CardContent className="p-6">
