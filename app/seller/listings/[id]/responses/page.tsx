@@ -13,6 +13,7 @@ import {
   TableRow 
 } from '@/components/ui/table'
 import { ArrowLeft, Mail, Calendar, User, FileText, Download } from 'lucide-react'
+import { ResponseStatusActions } from '@/components/listings/ResponseStatusActions'
 
 export const revalidate = 0
 
@@ -67,6 +68,7 @@ export default async function ListingResponsesPage({ params }: PageProps) {
       buyer_id,
       form_data,
       submitted_at,
+      status,
       profiles (
         email,
         full_name
@@ -134,6 +136,7 @@ export default async function ListingResponsesPage({ params }: PageProps) {
                       {field.label}
                     </TableHead>
                   ))}
+                  <TableHead className="font-semibold text-muted-foreground py-4 text-right">Status / Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -170,6 +173,9 @@ export default async function ListingResponsesPage({ params }: PageProps) {
                           </TableCell>
                         )
                       })}
+                      <TableCell className="py-4 text-right">
+                        <ResponseStatusActions responseId={resp.id} currentStatus={resp.status} />
+                      </TableCell>
                     </TableRow>
                   )
                 })}
@@ -191,6 +197,7 @@ export default async function ListingResponsesPage({ params }: PageProps) {
                         <Calendar className="h-3.5 w-3.5" />
                         <span>{new Date(resp.submitted_at).toLocaleDateString()}</span>
                       </div>
+                      <ResponseStatusActions responseId={resp.id} currentStatus={resp.status} />
                     </div>
                     {buyerProfile ? (
                       <div className="flex items-center gap-2 mt-2">
