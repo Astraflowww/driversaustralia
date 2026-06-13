@@ -30,6 +30,7 @@ const statusLabels: Record<string, string> = {
   pending: 'Pending Moderation',
   approved: 'Approved Listings',
   rejected: 'Rejected Listings',
+  closed: 'Closed Listings',
 }
 
 interface Listing {
@@ -37,7 +38,7 @@ interface Listing {
   title: string
   description: string | null
   category: string
-  status: 'pending' | 'approved' | 'rejected'
+  status: 'pending' | 'approved' | 'rejected' | 'closed'
   created_at: string
   profiles?: {
     full_name: string | null
@@ -106,6 +107,7 @@ export function ListingApprovalTable({ initialListings }: ListingApprovalTablePr
               <SelectItem className="cursor-pointer" value="pending">Pending Moderation</SelectItem>
               <SelectItem className="cursor-pointer" value="approved">Approved Listings</SelectItem>
               <SelectItem className="cursor-pointer" value="rejected">Rejected Listings</SelectItem>
+              <SelectItem className="cursor-pointer" value="closed">Closed Listings</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -190,6 +192,11 @@ export function ListingApprovalTable({ initialListings }: ListingApprovalTablePr
                         <span className="inline-flex items-center gap-1 rounded-full bg-destructive/10 border border-destructive/20 px-2.5 py-0.5 text-xs font-semibold text-destructive">
                           <XCircle className="h-3 w-3" />
                           Rejected
+                        </span>
+                      )}
+                      {listing.status === 'closed' && (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-muted border border-border px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
+                          Closed
                         </span>
                       )}
                     </TableCell>
@@ -292,6 +299,11 @@ export function ListingApprovalTable({ initialListings }: ListingApprovalTablePr
                       <span className="inline-flex items-center gap-1 rounded-full bg-destructive/10 border border-destructive/20 px-2.5 py-0.5 text-xs font-semibold text-destructive">
                         <XCircle className="h-3.5 w-3.5" />
                         Rejected
+                      </span>
+                    )}
+                    {listing.status === 'closed' && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-muted border border-border px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
+                        Closed
                       </span>
                     )}
                   </div>

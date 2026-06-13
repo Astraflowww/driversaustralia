@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/server'
 import { BuyerResponseForm } from '@/components/listings/BuyerResponseForm'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowLeft, Calendar, Briefcase, User, Sparkles } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 export const revalidate = 0
 
@@ -33,6 +34,28 @@ export default async function ListingDetailPage({ params }: PageProps) {
   // Check if listing exists and is approved (admins and owners can view pending too, let's keep it simple for now)
   if (!listing) {
     notFound()
+  }
+
+  // If listing is closed, return the closed screen
+  if (listing.status === 'closed') {
+    return (
+      <div className="mx-auto max-w-7xl px-4 py-16">
+        <div className="rounded-lg border border-border bg-card p-8 text-center max-w-md mx-auto space-y-4 shadow-none">
+          <div className="rounded-md bg-muted p-3 text-muted-foreground shrink-0 border border-border w-fit mx-auto">
+            <Briefcase className="h-6 w-6" />
+          </div>
+          <h3 className="text-xl font-bold text-foreground">Listing Closed</h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            This job listing has been closed by the transport operator and is no longer accepting new responses.
+          </p>
+          <Link href="/" className="inline-block pt-2">
+            <Button variant="outline" size="sm" className="cursor-pointer">
+              Back to Browse
+            </Button>
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   // Double check status. If not approved, confirm if current user is owner or admin.

@@ -6,6 +6,7 @@ import { TokenBadge } from '@/components/shared/TokenBadge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { BusinessProfileCard } from '@/components/listings/BusinessProfileCard'
+import { CloseListingButton } from '@/components/listings/CloseListingButton'
 import { 
   PlusCircle, 
   ListTodo, 
@@ -218,14 +219,24 @@ export default async function SellerDashboardPage() {
                             Rejected
                           </span>
                         )}
+                        {listing.status === 'closed' && (
+                          <span className="inline-flex items-center rounded-md bg-muted border border-border px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
+                            Closed
+                          </span>
+                        )}
                       </div>
 
-                      {/* Link to view responses */}
-                      <Link href={`/seller/listings/${listing.id}/responses`}>
-                        <Button variant="outline" size="sm" className="cursor-pointer">
-                          Responses
-                        </Button>
-                      </Link>
+                      {/* Actions */}
+                      <div className="flex items-center gap-2">
+                        {listing.status !== 'closed' && (
+                          <CloseListingButton listingId={listing.id} />
+                        )}
+                        <Link href={`/seller/listings/${listing.id}/responses`}>
+                          <Button variant="outline" size="sm" className="cursor-pointer">
+                            Responses
+                          </Button>
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </Card>
