@@ -23,7 +23,8 @@ export default async function ListingDetailPage({ params }: PageProps) {
       *,
       profiles (
         full_name,
-        email
+        email,
+        business_name
       )
     `)
     .eq('id', id)
@@ -150,7 +151,7 @@ export default async function ListingDetailPage({ params }: PageProps) {
                 <div className="space-y-0.5">
                   <p className="text-[10px] text-muted-foreground uppercase font-semibold tracking-wider">Transport Operator</p>
                   <p className="font-semibold text-foreground text-base">
-                    {sellerProfile?.full_name || 'Anonymous Operator'}
+                    {sellerProfile?.business_name || sellerProfile?.full_name || 'Anonymous Operator'}
                   </p>
                   <p className="text-xs text-muted-foreground">
                     Verified Operator Member

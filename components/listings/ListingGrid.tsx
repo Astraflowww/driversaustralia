@@ -12,6 +12,7 @@ interface Listing {
   created_at: string
   profiles?: {
     full_name: string | null
+    business_name: string | null
   }
 }
 
@@ -42,7 +43,7 @@ export function ListingGrid({ listings }: ListingGridProps) {
           description={listing.description}
           category={listing.category}
           createdAt={listing.created_at}
-          sellerName={listing.profiles?.full_name || undefined}
+          sellerName={listing.profiles?.business_name || listing.profiles?.full_name || undefined}
         />
       ))}
     </div>

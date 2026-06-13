@@ -40,7 +40,8 @@ export default async function AdminListingsPage() {
       created_at,
       profiles (
         full_name,
-        email
+        email,
+        business_name
       )
     `)
     .order('created_at', { ascending: false })

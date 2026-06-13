@@ -26,7 +26,8 @@ export default async function BrowsePage() {
       category,
       created_at,
       profiles (
-        full_name
+        full_name,
+        business_name
       )
     `)
     .eq('status', 'approved')

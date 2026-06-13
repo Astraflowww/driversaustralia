@@ -42,6 +42,7 @@ interface Listing {
   profiles?: {
     full_name: string | null
     email: string
+    business_name: string | null
   }
 }
 
@@ -163,7 +164,7 @@ export function ListingApprovalTable({ initialListings }: ListingApprovalTablePr
                     <TableCell className="py-4">
                       <div className="flex flex-col">
                         <span className="font-semibold text-sm">
-                          {seller?.full_name || 'Anonymous'}
+                          {seller?.business_name || seller?.full_name || 'Anonymous'}
                         </span>
                         <span className="text-[10px] text-muted-foreground">
                           {seller?.email}
@@ -306,7 +307,7 @@ export function ListingApprovalTable({ initialListings }: ListingApprovalTablePr
                   <div className="flex flex-col text-left">
                     <span className="text-[9px] text-muted-foreground uppercase font-bold tracking-wider">Business Owner</span>
                     <span className="font-semibold text-xs text-foreground truncate max-w-[120px]">
-                      {seller?.full_name || 'Anonymous'}
+                      {seller?.business_name || seller?.full_name || 'Anonymous'}
                     </span>
                     <span className="text-[10px] text-muted-foreground truncate max-w-[120px]">
                       {seller?.email}

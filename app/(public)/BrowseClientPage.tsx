@@ -14,6 +14,7 @@ interface Listing {
   created_at: string
   profiles?: {
     full_name: string | null
+    business_name: string | null
   }
 }
 
