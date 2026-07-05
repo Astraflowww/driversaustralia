@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { Sparkles, Loader2, ArrowRight, Eye, EyeOff, Lock, Mail, User, Briefcase, CheckCircle2, Check } from 'lucide-react'
+import { Sparkles, Loader2, ArrowRight, Eye, EyeOff, Lock, Mail, User, Briefcase, CheckCircle2, Check, Phone, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -16,8 +16,12 @@ export default function RegisterPage() {
   
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [address, setAddress] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [role, setRole] = useState<'buyer' | 'seller'>('buyer')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -26,13 +30,22 @@ export default function RegisterPage() {
   // Focus states for premium visual feedback
   const [nameFocused, setNameFocused] = useState(false)
   const [emailFocused, setEmailFocused] = useState(false)
+  const [phoneFocused, setPhoneFocused] = useState(false)
+  const [addressFocused, setAddressFocused] = useState(false)
   const [passwordFocused, setPasswordFocused] = useState(false)
+  const [confirmPasswordFocused, setConfirmPasswordFocused] = useState(false)
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
     setSuccess(false)
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match. Please verify your password.')
+      setLoading(false)
+      return
+    }
 
     const supabase = createClient()
 
@@ -43,6 +56,8 @@ export default function RegisterPage() {
         options: {
           data: {
             full_name: fullName,
+            phone: phone,
+            address: address,
             role: role,
           },
         },
@@ -55,7 +70,7 @@ export default function RegisterPage() {
       setSuccess(true)
       setTimeout(() => {
         router.push('/login')
-      }, 3000)
+      }, 5000)
     } catch (err: any) {
       setError(err.message || 'Failed to register. Please try again.')
     } finally {
@@ -64,7 +79,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex flex-col lg:flex-row bg-[#f5f1ec] dark:bg-[#111111]">
+    <div className="register-page min-h-[calc(100vh-4rem)] flex flex-col lg:flex-row bg-[#f5f1ec] dark:bg-[#111111]">
       {/* Left visual column */}
       <div className="hidden lg:flex lg:w-5/12 bg-[#111111] text-white p-8 xl:p-12 flex-col justify-between relative overflow-hidden border-r border-border/10">
         {/* Glow effects */}
@@ -146,6 +161,9 @@ export default function RegisterPage() {
                 Registration successful!
               </div>
               <p className="text-muted-foreground text-sm">
+                We have sent an email verification link to <span className="font-semibold text-foreground">{email}</span>. Please verify your email before logging in.
+              </p>
+              <p className="text-muted-foreground/60 text-xs">
                 Redirecting you to the login page...
               </p>
             </CardContent>
@@ -197,6 +215,47 @@ export default function RegisterPage() {
                     />
                   </div>
                 </div>
+
+
+                <div className="space-y-1.5">
+                  <Label htmlFor="phone" className="text-xs font-semibold text-foreground/80 tracking-wide">Mobile Number</Label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                      <Phone className={cn("h-4.5 w-4.5 transition-colors duration-200", phoneFocused ? "text-[#f0a500]" : "text-muted-foreground/70")} />
+                    </div>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="+61 400 000 000"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      onFocus={() => setPhoneFocused(true)}
+                      onBlur={() => setPhoneFocused(false)}
+                      required
+                      className="bg-muted/30 dark:bg-muted/10 border-border/50 hover:border-border/80 focus:bg-background focus-visible:border-[#f0a500] focus-visible:ring-4 focus-visible:ring-[#f0a500]/10 rounded-lg pl-10.5 h-11 text-sm transition-all shadow-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <Label htmlFor="address" className="text-xs font-semibold text-foreground/80 tracking-wide">Address</Label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                      <MapPin className={cn("h-4.5 w-4.5 transition-colors duration-200", addressFocused ? "text-[#f0a500]" : "text-muted-foreground/70")} />
+                    </div>
+                    <Input
+                      id="address"
+                      type="text"
+                      placeholder="Street Address, City, State, Postcode"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      onFocus={() => setAddressFocused(true)}
+                      onBlur={() => setAddressFocused(false)}
+                      required
+                      className="bg-muted/30 dark:bg-muted/10 border-border/50 hover:border-border/80 focus:bg-background focus-visible:border-[#f0a500] focus-visible:ring-4 focus-visible:ring-[#f0a500]/10 rounded-lg pl-10.5 h-11 text-sm transition-all shadow-none"
+                    />
+                  </div>
+                </div>
                 
                 <div className="space-y-1.5">
                   <Label htmlFor="password" className="text-xs font-semibold text-foreground/80 tracking-wide">Password</Label>
@@ -222,6 +281,34 @@ export default function RegisterPage() {
                       aria-label={showPassword ? "Hide password" : "Show password"}
                     >
                       {showPassword ? <EyeOff className="h-4.5 w-4.5" /> : <Eye className="h-4.5 w-4.5" />}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <Label htmlFor="confirmPassword" className="text-xs font-semibold text-foreground/80 tracking-wide">Confirm Password</Label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                      <Lock className={cn("h-4.5 w-4.5 transition-colors duration-200", confirmPasswordFocused ? "text-[#f0a500]" : "text-muted-foreground/70")} />
+                    </div>
+                    <Input
+                      id="confirmPassword"
+                      type={showConfirmPassword ? "text" : "password"}
+                      placeholder="••••••••"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      onFocus={() => setConfirmPasswordFocused(true)}
+                      onBlur={() => setConfirmPasswordFocused(false)}
+                      required
+                      className="bg-muted/30 dark:bg-muted/10 border-border/50 hover:border-border/80 focus:bg-background focus-visible:border-[#f0a500] focus-visible:ring-4 focus-visible:ring-[#f0a500]/10 rounded-lg pl-10.5 pr-11 h-11 text-sm transition-all shadow-none"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground/60 hover:text-foreground cursor-pointer transition-colors p-1"
+                      aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                    >
+                      {showConfirmPassword ? <EyeOff className="h-4.5 w-4.5" /> : <Eye className="h-4.5 w-4.5" />}
                     </button>
                   </div>
                 </div>

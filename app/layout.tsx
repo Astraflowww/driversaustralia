@@ -4,6 +4,8 @@ import "./globals.css";
 import { createClient } from "@/lib/supabase/server";
 import { Navbar } from "@/components/shared/Navbar";
 import { Footer } from "@/components/blocks/footer-section";
+import { headers } from "next/headers";
+import { FloatingChatButton } from "@/components/shared/FloatingChatButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +30,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '';
+  const isAdmin = pathname.startsWith('/admin');
+
   let profile = null;
   
   try {
@@ -72,9 +78,10 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <Navbar profile={profile as any} />
+        {!isAdmin && <Navbar profile={profile as any} />}
         <main className="flex-grow flex flex-col">{children}</main>
-        <Footer />
+        {profile && !isAdmin && <FloatingChatButton />}
+        {!isAdmin && <Footer />}
       </body>
     </html>
   );

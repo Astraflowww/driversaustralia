@@ -14,7 +14,7 @@ export async function PATCH(request: NextRequest) {
 
     // 2. Parse request body
     const body = await request.json()
-    const { full_name, business_name, business_phone, abn, business_address } = body
+    const { full_name, phone, address, business_name, business_phone, abn, business_address } = body
 
     // 3. Update profile details
     // Note: The database RLS policy allows users to update their own profile columns
@@ -23,6 +23,8 @@ export async function PATCH(request: NextRequest) {
       .from('profiles')
       .update({
         full_name,
+        phone,
+        address,
         business_name,
         business_phone,
         abn,

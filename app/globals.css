@@ -169,6 +169,26 @@
   }
   html {
     @apply font-sans scroll-smooth;
+    background-color: var(--background);
+  }
+  
+  /* Split layout backgrounds for login and register page footers */
+  body:has(.register-page),
+  body:has(.login-page) {
+    background-color: #f5f1ec;
+  }
+  
+  @media (min-width: 1024px) {
+    body:has(.register-page),
+    body:has(.login-page) {
+      background: linear-gradient(to right, #111111 41.666667%, #f5f1ec 41.666667%);
+    }
+  }
+  
+  .dark body:has(.register-page),
+  .dark body:has(.login-page) {
+    background-color: #111111;
+    background-image: none;
   }
 }
 
