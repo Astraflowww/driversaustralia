@@ -102,7 +102,7 @@ export const PlaceCard = ({
       )}
     >
       {/* Image Carousel Section */}
-      <div className="relative group h-32 sm:h-48">
+      <div className="relative group h-32 sm:h-48 bg-muted flex items-center justify-center">
         <AnimatePresence initial={false} custom={direction}>
           <motion.img
             key={currentIndex}
@@ -117,7 +117,7 @@ export const PlaceCard = ({
               x: { type: 'spring', stiffness: 300, damping: 30 },
               opacity: { duration: 0.2 },
             }}
-            className="absolute h-full w-full object-cover"
+            className="absolute h-full w-full object-contain"
           />
         </AnimatePresence>
         

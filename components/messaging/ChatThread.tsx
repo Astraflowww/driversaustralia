@@ -6,6 +6,7 @@ import { usePollingMessages } from '@/lib/hooks/usePollingMessages'
 import { ChatHeader } from './ChatHeader'
 import { MessageBubble } from './MessageBubble'
 import { MessageInput } from './MessageInput'
+import { formatChatDate } from '@/lib/utils'
 
 interface UserProfile {
   id: string
@@ -110,11 +111,7 @@ export function ChatThread({
     } else if (currentDate.toDateString() === yesterday.toDateString()) {
       dateText = 'Yesterday'
     } else {
-      dateText = currentDate.toLocaleDateString([], {
-        weekday: 'long',
-        month: 'short',
-        day: 'numeric'
-      })
+      dateText = formatChatDate(currentDate)
     }
 
     return (

@@ -42,8 +42,8 @@ export default async function AdminSettingsPage() {
       .select('key, value')
 
     if (!error && data) {
-      data.forEach((row) => {
-        dbSettings[row.key as keyof typeof DEFAULT_SETTINGS] = row.value
+      (data as any[]).forEach((row: any) => {
+        (dbSettings as any)[row.key] = row.value
       })
     }
   } catch (e) {

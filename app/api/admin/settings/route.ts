@@ -21,7 +21,7 @@ export async function GET() {
     const settings = { ...DEFAULT_SETTINGS }
 
     if (!error && data) {
-      data.forEach((row) => {
+      (data as any[]).forEach((row: any) => {
         settings[row.key] = row.value
       })
     }

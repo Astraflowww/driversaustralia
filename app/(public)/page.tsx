@@ -25,6 +25,7 @@ export default async function BrowsePage() {
       description,
       category,
       created_at,
+      image_url,
       profiles (
         full_name,
         business_name

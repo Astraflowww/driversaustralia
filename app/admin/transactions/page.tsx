@@ -34,17 +34,17 @@ export default async function AdminTransactionsPage() {
 
   // 2. Resolve user/admin details for transactions in-memory to prevent complex ambiguity join errors
   const userIds = Array.from(new Set([
-    ...txsData.map(t => t.user_id),
-    ...txsData.map(t => t.admin_id).filter(Boolean)
+    ...(txsData || []).map((t: any) => t.user_id),
+    ...(txsData || []).map((t: any) => t.admin_id).filter(Boolean)
   ]))
   
   const { data: txProfiles = [] } = userIds.length > 0 
     ? await supabase.from('profiles').select('id, email, full_name').in('id', userIds)
     : { data: [] }
 
-  const profileMap = new Map(txProfiles.map(p => [p.id, p]))
+  const profileMap = new Map((txProfiles || []).map((p: any) => [p.id, p]))
 
-  const transactions = txsData.map(t => ({
+  const transactions = (txsData || []).map((t: any) => ({
     ...t,
     user: profileMap.get(t.user_id) || null,
     admin: t.admin_id ? profileMap.get(t.admin_id) || null : null

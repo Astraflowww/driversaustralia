@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS public.listings (
   description         TEXT,
   category            TEXT NOT NULL, -- e.g. 'driver', 'event', 'service', 'other'
   form_schema         JSONB NOT NULL, -- dynamic form fields definition
+  image_url           TEXT,
   status              TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected', 'closed')),
   created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW()

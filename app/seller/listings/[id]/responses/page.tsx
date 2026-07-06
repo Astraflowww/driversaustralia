@@ -15,6 +15,7 @@ import {
 import { ArrowLeft, Mail, Calendar, User, FileText, Download } from 'lucide-react'
 import { ResponseStatusActions } from '@/components/listings/ResponseStatusActions'
 import { StartChatButton } from '@/components/messaging/StartChatButton'
+import { formatShortDate } from '@/lib/utils'
 
 export const revalidate = 0
 
@@ -207,7 +208,7 @@ export default async function ListingResponsesPage({ params }: PageProps) {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <Calendar className="h-3.5 w-3.5" />
-                        <span>{new Date(resp.submitted_at).toLocaleDateString()}</span>
+                        <span>{formatShortDate(resp.submitted_at)}</span>
                       </div>
                       <ResponseStatusActions responseId={resp.id} currentStatus={resp.status} />
                     </div>

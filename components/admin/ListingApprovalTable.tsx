@@ -21,7 +21,7 @@ import {
   Loader2,
   FileSpreadsheet
 } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { cn, formatShortDate } from '@/lib/utils'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
 
@@ -152,7 +152,7 @@ export function ListingApprovalTable({ initialListings }: ListingApprovalTablePr
                             {listing.category}
                           </span>
                           <span className="text-[10px] text-muted-foreground">
-                            {new Date(listing.created_at).toLocaleDateString()}
+                            {formatShortDate(listing.created_at)}
                           </span>
                         </div>
                         <h4 className="font-bold text-sm text-foreground line-clamp-1">{listing.title}</h4>
@@ -277,7 +277,7 @@ export function ListingApprovalTable({ initialListings }: ListingApprovalTablePr
                         {listing.category}
                       </span>
                       <span className="text-[10px] text-muted-foreground">
-                        {new Date(listing.created_at).toLocaleDateString()}
+                        {formatShortDate(listing.created_at)}
                       </span>
                     </div>
                     <h4 className="font-bold text-sm text-foreground">{listing.title}</h4>

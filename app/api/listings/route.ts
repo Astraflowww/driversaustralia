@@ -51,10 +51,14 @@ export async function POST(request: NextRequest) {
 
     // 3. Parse and validate body
     const body = await request.json()
-    const { title, description, category, form_schema } = body
+    const { title, description, category, form_schema, image_url } = body
 
     if (!title || !category || !form_schema || !Array.isArray(form_schema)) {
       return NextResponse.json({ error: 'Invalid listing request parameters' }, { status: 400 })
+    }
+
+    if (!image_url) {
+      return NextResponse.json({ error: 'A banner image is required' }, { status: 400 })
     }
 
     // 4. spend_token RPC function (checks balance and deducts 1 token atomically)
@@ -75,6 +79,7 @@ export async function POST(request: NextRequest) {
         description,
         category,
         form_schema,
+        image_url,
         status: 'pending' // Force moderation status
       })
       .select()

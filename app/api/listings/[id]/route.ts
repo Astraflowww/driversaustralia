@@ -55,7 +55,11 @@ export async function PATCH(request: NextRequest, { params }: ParamsProps) {
     }
 
     const body = await request.json()
-    const { title, description, category, form_schema } = body
+    const { title, description, category, form_schema, image_url } = body
+
+    if (!image_url) {
+      return NextResponse.json({ error: 'A banner image is required' }, { status: 400 })
+    }
 
     const { data, error } = await supabase
       .from('listings')
@@ -64,6 +68,7 @@ export async function PATCH(request: NextRequest, { params }: ParamsProps) {
         description,
         category,
         form_schema,
+        image_url,
         status: 'pending' // Revert to pending on updates
       })
       .eq('id', id)

@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { ArrowLeft, Calendar, Briefcase, User, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { StartChatButton } from '@/components/messaging/StartChatButton'
+import { formatShortDate } from '@/lib/utils'
 
 export const revalidate = 0
 
@@ -132,6 +133,17 @@ export default async function ListingDetailPage({ params }: PageProps) {
         </Link>
       </div>
 
+      {/* Listing Banner Image */}
+      {listing.image_url && (
+        <div className="relative w-full h-48 sm:h-72 md:h-[320px] rounded-xl overflow-hidden border border-border/50 bg-muted flex items-center justify-center">
+          <img
+            src={listing.image_url}
+            alt={listing.title}
+            className="w-full h-full object-contain"
+          />
+        </div>
+      )}
+
       <div className="grid gap-8 lg:grid-cols-12 items-start">
         {/* Left Side: Listing Details */}
         <div className="lg:col-span-7 space-y-6">
@@ -142,7 +154,7 @@ export default async function ListingDetailPage({ params }: PageProps) {
               </span>
               <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                 <Calendar className="h-3.5 w-3.5" />
-                Posted on {new Date(listing.created_at).toLocaleDateString()}
+                Posted on {formatShortDate(listing.created_at)}
               </span>
             </div>
             

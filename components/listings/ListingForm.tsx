@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Plus, Trash, Eye, Settings, Coins, Loader2, ArrowRight } from 'lucide-react'
+import { Plus, Trash, Eye, Settings, Coins, Loader2, ArrowRight, UploadCloud, Image, AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -11,6 +11,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
+import { createClient } from '@/lib/supabase/client'
 
 interface DynamicField {
   id: string
@@ -53,6 +54,11 @@ export function ListingForm({ initialTokens, userId }: ListingFormProps) {
   const [description, setDescription] = useState('')
   const [category, setCategory] = useState('mc')
 
+  // Image Upload States
+  const [imageUrl, setImageUrl] = useState('')
+  const [uploading, setUploading] = useState(false)
+  const [dragActive, setDragActive] = useState(false)
+
   // Dynamic Fields
   const [fields, setFields] = useState<DynamicField[]>([
     { id: 'name', label: 'Full Name', type: 'text', required: true },
@@ -61,6 +67,82 @@ export function ListingForm({ initialTokens, userId }: ListingFormProps) {
 
   // Helper states for adding fields
   const [newFieldLabel, setNewFieldLabel] = useState('')
+
+  const handleDrag = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (e.type === 'dragenter' || e.type === 'dragover') {
+      setDragActive(true)
+    } else if (e.type === 'dragleave') {
+      setDragActive(false)
+    }
+  }
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setDragActive(false)
+
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      await uploadFile(e.dataTransfer.files[0])
+    }
+  }
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      await uploadFile(e.target.files[0])
+    }
+  }
+
+  const uploadFile = async (file: File) => {
+    if (!file.type.startsWith('image/')) {
+      setError('Only image files are allowed.')
+      return
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      setError('File size must be less than 5MB.')
+      return
+    }
+
+    setUploading(true)
+    setError(null)
+
+    try {
+      const supabase = createClient()
+
+      // Generate a unique file path
+      const sanitizedFilename = file.name
+        .replace(/[^a-zA-Z0-9.-]/g, '_')
+        .replace(/_{2,}/g, '_')
+      const filePath = `listings/${userId}/${Date.now()}_${sanitizedFilename}`
+
+      // Upload directly to Supabase Storage
+      const { data, error: uploadError } = await supabase.storage
+        .from('listing-images')
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: false,
+          contentType: file.type,
+        })
+
+      if (uploadError) {
+        throw new Error(uploadError.message || 'Failed to upload image.')
+      }
+
+      // Construct the public URL
+      const { data: urlData } = supabase.storage
+        .from('listing-images')
+        .getPublicUrl(data.path)
+
+      setImageUrl(urlData.publicUrl)
+    } catch (err: any) {
+      console.error(err)
+      setError(err.message || 'Something went wrong during upload. Please try again.')
+    } finally {
+      setUploading(false)
+    }
+  }
   const [newFieldType, setNewFieldType] = useState<'text' | 'textarea' | 'tel' | 'select'>('text')
   const [newFieldRequired, setNewFieldRequired] = useState(true)
   const [newFieldSelectOptions, setNewFieldSelectOptions] = useState('')
@@ -112,6 +194,11 @@ export function ListingForm({ initialTokens, userId }: ListingFormProps) {
       return
     }
 
+    if (!imageUrl) {
+      setError('A listing banner image is required. Please upload an image.')
+      return
+    }
+
     if (fields.length === 0) {
       setError('Please add at least one response field for drivers to fill out.')
       return
@@ -131,6 +218,7 @@ export function ListingForm({ initialTokens, userId }: ListingFormProps) {
           description: description.trim(),
           category,
           form_schema: fields,
+          image_url: imageUrl,
         }),
       })
 
@@ -251,6 +339,72 @@ export function ListingForm({ initialTokens, userId }: ListingFormProps) {
                 rows={4}
                 className="bg-background"
               />
+            </div>
+
+            <div className="border-t border-border/40 pt-4 space-y-3">
+              <Label className="text-sm font-semibold flex items-center gap-1">
+                Listing Banner Image <span className="text-destructive">*</span>
+              </Label>
+              
+              {imageUrl ? (
+                <div className="relative rounded-lg border border-border overflow-hidden h-40 bg-muted group flex items-center justify-center">
+                  <img
+                    src={imageUrl}
+                    alt="Uploaded Banner"
+                    className="w-full h-full object-contain"
+                  />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => setImageUrl('')}
+                      className="cursor-pointer gap-1.5 shadow-none"
+                    >
+                      <Trash className="h-4 w-4" /> Remove Image
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  onDragEnter={handleDrag}
+                  onDragOver={handleDrag}
+                  onDragLeave={handleDrag}
+                  onDrop={handleDrop}
+                  className={cn(
+                    "border-2 border-dashed rounded-lg p-6 text-center transition-all duration-200 bg-background/50 flex flex-col items-center justify-center min-h-[160px] cursor-pointer",
+                    dragActive ? "border-fin-orange bg-fin-orange/5" : "border-hairline hover:border-foreground/30",
+                    uploading && "pointer-events-none opacity-60"
+                  )}
+                  onClick={() => document.getElementById('file-input')?.click()}
+                >
+                  <input
+                    id="file-input"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleFileChange}
+                    disabled={uploading}
+                  />
+                  
+                  {uploading ? (
+                    <div className="space-y-2 flex flex-col items-center">
+                      <Loader2 className="h-8 w-8 animate-spin text-fin-orange" />
+                      <p className="text-sm font-semibold text-foreground">Uploading image to CDN...</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2 flex flex-col items-center">
+                      <UploadCloud className="h-8 w-8 text-muted-foreground/60" />
+                      <p className="text-sm font-semibold text-foreground">
+                        Drag & drop or click to upload listing banner
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        PNG, JPG, WEBP, or GIF up to 5MB (Mandatory)
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -418,6 +572,22 @@ export function ListingForm({ initialTokens, userId }: ListingFormProps) {
         </h2>
         
         <Card className="border-border bg-card shadow-none rounded-lg overflow-hidden sticky top-24">
+          {imageUrl ? (
+            <div className="relative h-40 w-full overflow-hidden bg-muted flex items-center justify-center">
+              <img
+                src={imageUrl}
+                alt="Uploaded banner"
+                className="object-contain w-full h-full"
+              />
+            </div>
+          ) : (
+            <div className="relative h-40 w-full bg-muted flex items-center justify-center border-b border-border text-muted-foreground text-xs font-semibold">
+              <span className="flex items-center gap-1.5">
+                <Image className="h-4 w-4" /> No Banner Image Uploaded
+              </span>
+            </div>
+          )}
+          
           <div className="bg-muted/30 p-5 border-b border-border/40">
             <span className="text-[10px] uppercase font-semibold text-foreground tracking-wider px-2 py-0.5 rounded bg-muted border border-border/30">
               {category}

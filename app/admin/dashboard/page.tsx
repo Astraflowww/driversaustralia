@@ -57,17 +57,17 @@ export default async function AdminDashboardPage() {
 
   // Resolve user/admin details for recent transactions in-memory to prevent complex ambiguity join errors
   const userIds = Array.from(new Set([
-    ...txsData.map(t => t.user_id),
-    ...txsData.map(t => t.admin_id).filter(Boolean)
+    ...(txsData || []).map((t: any) => t.user_id),
+    ...(txsData || []).map((t: any) => t.admin_id).filter(Boolean)
   ]))
   
   const { data: txProfiles = [] } = userIds.length > 0 
     ? await supabase.from('profiles').select('id, email, full_name').in('id', userIds)
     : { data: [] }
 
-  const profileMap = new Map(txProfiles.map(p => [p.id, p]))
+  const profileMap = new Map((txProfiles || []).map((p: any) => [p.id, p]))
 
-  const transactions = txsData.map(t => ({
+  const transactions = (txsData || []).map((t: any) => ({
     ...t,
     user: profileMap.get(t.user_id),
     admin: t.admin_id ? profileMap.get(t.admin_id) : null
@@ -92,15 +92,15 @@ export default async function AdminDashboardPage() {
     .limit(5)
 
   // Calculations
-  const totalUsers = profilesData.length
-  const totalSellers = profilesData.filter(p => p.role === 'seller').length
-  const totalBuyers = profilesData.filter(p => p.role === 'buyer').length
-  const totalAdmins = profilesData.filter(p => p.role === 'admin').length
+  const totalUsers = (profilesData || []).length
+  const totalSellers = (profilesData || []).filter((p: any) => p.role === 'seller').length
+  const totalBuyers = (profilesData || []).filter((p: any) => p.role === 'buyer').length
+  const totalAdmins = (profilesData || []).filter((p: any) => p.role === 'admin').length
 
-  const totalListings = listingsData.length
-  const approvedListings = listingsData.filter(l => l.status === 'approved').length
-  const pendingListings = listingsData.filter(l => l.status === 'pending').length
-  const rejectedListings = listingsData.filter(l => l.status === 'rejected').length
+  const totalListings = (listingsData || []).length
+  const approvedListings = (listingsData || []).filter((l: any) => l.status === 'approved').length
+  const pendingListings = (listingsData || []).filter((l: any) => l.status === 'pending').length
+  const rejectedListings = (listingsData || []).filter((l: any) => l.status === 'rejected').length
 
   return (
     <div className="space-y-8">
@@ -206,7 +206,7 @@ export default async function AdminDashboardPage() {
             </CardHeader>
             <CardContent className="pt-4 space-y-2">
               <div className="text-3xl font-medium tracking-tight text-[#111111]">
-                {profilesData.reduce((acc, p) => acc + (p.tokens || 0), 0)}
+                {(profilesData || []).reduce((acc: number, p: any) => acc + (p.tokens || 0), 0)}
               </div>
               <p className="text-xs text-[#626260]">
                 Total seller credits active in the system ecosystem. Check ledger for audit tracking.
@@ -311,7 +311,7 @@ export default async function AdminDashboardPage() {
                 </div>
               ) : (
                 <div className="divide-y divide-[#f5f1ec]">
-                  {pendingQueue.map((item) => (
+                  {(pendingQueue || []).map((item: any) => (
                     <div key={item.id} className="flex items-center justify-between p-4 hover:bg-neutral-50 transition-colors">
                       <div className="space-y-1 max-w-[70%]">
                         <span className="inline-block text-[10px] uppercase font-bold tracking-wider text-[#626260] bg-neutral-100 px-1.5 py-0.5 rounded">
@@ -357,7 +357,7 @@ export default async function AdminDashboardPage() {
             </div>
           ) : (
             <div className="divide-y divide-[#f5f1ec] text-sm">
-              {transactions.map((tx) => (
+              {(transactions || []).map((tx: any) => (
                 <div key={tx.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 hover:bg-neutral-50 transition-colors gap-2">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2 flex-wrap">

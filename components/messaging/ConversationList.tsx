@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from 'react'
 import { Star, Search, MessageSquare, AlertCircle } from 'lucide-react'
+import { formatMonthDay } from '@/lib/utils'
 
 export interface ConversationItem {
   id: string
@@ -47,8 +48,8 @@ export function ConversationList({
     if (diffHours < 24) return `${diffHours}h`
     if (diffDays === 1) return 'Yesterday'
     
-    // Default: format as month + day (e.g. "Jul 3")
-    return past.toLocaleDateString([], { month: 'short', day: 'numeric' })
+    // Default: format as month + day (e.g. "3 Jul")
+    return formatMonthDay(past)
   }
 
   // Filter & Search logic
