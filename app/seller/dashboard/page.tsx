@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { BusinessProfileCard } from '@/components/listings/BusinessProfileCard'
 import { CloseListingButton } from '@/components/listings/CloseListingButton'
+import { formatShortDate } from '@/lib/utils'
 import { 
   PlusCircle, 
   ListTodo, 
@@ -197,7 +198,7 @@ export default async function SellerDashboardPage() {
                         {listing.description || 'No description provided.'}
                       </p>
                       <span className="text-[10px] text-muted-foreground block">
-                        Created on {new Date(listing.created_at).toLocaleDateString()}
+                        Created on {formatShortDate(listing.created_at)}
                       </span>
                     </div>
 

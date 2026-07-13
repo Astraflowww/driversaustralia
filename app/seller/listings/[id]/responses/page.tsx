@@ -14,6 +14,8 @@ import {
 } from '@/components/ui/table'
 import { ArrowLeft, Mail, Calendar, User, FileText, Download } from 'lucide-react'
 import { ResponseStatusActions } from '@/components/listings/ResponseStatusActions'
+import { StartChatButton } from '@/components/messaging/StartChatButton'
+import { formatShortDate } from '@/lib/utils'
 
 export const revalidate = 0
 
@@ -174,7 +176,18 @@ export default async function ListingResponsesPage({ params }: PageProps) {
                         )
                       })}
                       <TableCell className="py-4 text-right">
-                        <ResponseStatusActions responseId={resp.id} currentStatus={resp.status} />
+                        <div className="flex items-center justify-end gap-2">
+                          {resp.buyer_id && (
+                            <StartChatButton
+                              listingId={listing.id}
+                              otherUserId={resp.buyer_id}
+                              label="Message"
+                              variant="ghost"
+                              size="sm"
+                            />
+                          )}
+                          <ResponseStatusActions responseId={resp.id} currentStatus={resp.status} />
+                        </div>
                       </TableCell>
                     </TableRow>
                   )
@@ -195,17 +208,28 @@ export default async function ListingResponsesPage({ params }: PageProps) {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <Calendar className="h-3.5 w-3.5" />
-                        <span>{new Date(resp.submitted_at).toLocaleDateString()}</span>
+                        <span>{formatShortDate(resp.submitted_at)}</span>
                       </div>
                       <ResponseStatusActions responseId={resp.id} currentStatus={resp.status} />
                     </div>
                     {buyerProfile ? (
-                      <div className="flex items-center gap-2 mt-2">
-                        <User className="h-4 w-4 text-primary" />
-                        <div>
-                          <p className="text-sm font-semibold">{buyerProfile.full_name || 'Anonymous Driver'}</p>
-                          <p className="text-[10px] text-muted-foreground">{buyerProfile.email}</p>
+                      <div className="flex items-center justify-between gap-2 mt-2">
+                        <div className="flex items-center gap-2">
+                          <User className="h-4 w-4 text-primary" />
+                          <div>
+                            <p className="text-sm font-semibold">{buyerProfile.full_name || 'Anonymous Driver'}</p>
+                            <p className="text-[10px] text-muted-foreground">{buyerProfile.email}</p>
+                          </div>
                         </div>
+                        {resp.buyer_id && (
+                          <StartChatButton
+                            listingId={listing.id}
+                            otherUserId={resp.buyer_id}
+                            label="Message"
+                            variant="outline"
+                            size="sm"
+                          />
+                        )}
                       </div>
                     ) : (
                       <p className="text-sm text-muted-foreground italic mt-2">Guest Applicant</p>

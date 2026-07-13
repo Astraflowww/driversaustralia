@@ -3,6 +3,8 @@
 import React from 'react'
 import { PlaceCard } from '@/components/ui/card-22'
 import { useRouter } from 'next/navigation'
+import { formatDate } from '@/lib/utils'
+
 
 interface ListingCardProps {
   id: string
@@ -10,6 +12,7 @@ interface ListingCardProps {
   description: string | null
   category: string
   createdAt: string
+  imageUrl?: string | null
   sellerName?: string
 }
 
@@ -19,6 +22,7 @@ export function ListingCard({
   description,
   category,
   createdAt,
+  imageUrl,
   sellerName,
 }: ListingCardProps) {
   const router = useRouter()
@@ -55,7 +59,7 @@ export function ListingCard({
     ],
   }
 
-  const images = categoryImages[category] || categoryImages.other
+  const images = imageUrl ? [imageUrl] : (categoryImages[category] || categoryImages.other)
 
   const categoryLabels: Record<string, string> = {
     mc: 'MC Licence',
@@ -69,11 +73,8 @@ export function ListingCard({
   const categoryLabel = categoryLabels[category] || (category.toUpperCase() + ' Licence')
   
   // Format dates nicely
-  const formattedDate = new Date(createdAt).toLocaleDateString(undefined, {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric'
-  })
+  const formattedDate = formatDate(createdAt)
+
 
   // Star ratings representation: length of title modulo 2 + 4.1 to give a premium unique dynamic rating
   const rating = parseFloat((4.5 + (title.length % 6) * 0.1).toFixed(1))

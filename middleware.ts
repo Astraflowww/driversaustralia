@@ -2,17 +2,21 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { updateSession } from '@/lib/supabase/middleware'
 
 export async function middleware(request: NextRequest) {
-  const { supabaseResponse, user, role } = await updateSession(request)
-
   const path = request.nextUrl.pathname
+
+  // Set custom header with current pathname to make it accessible in server layouts
+  request.headers.set('x-pathname', path)
+
+  const { supabaseResponse, user, role } = await updateSession(request)
 
   // Public/Auth routes
   const isAuthRoute = path.startsWith('/login') || path.startsWith('/register')
   const isSellerRoute = path.startsWith('/seller')
   const isAdminRoute = path.startsWith('/admin')
+  const isMessagesRoute = path.startsWith('/messages')
 
   // If not logged in and trying to access protected routes, redirect to login
-  if (!user && (isSellerRoute || isAdminRoute)) {
+  if (!user && (isSellerRoute || isAdminRoute || isMessagesRoute)) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     url.searchParams.set('redirect', path)

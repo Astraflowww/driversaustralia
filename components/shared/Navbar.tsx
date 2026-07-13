@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { TokenBadge } from './TokenBadge'
+import { UnreadBadge } from '../messaging/UnreadBadge'
 import { 
   Menu, 
   X, 
@@ -15,7 +16,8 @@ import {
   Shield, 
   Users, 
   ListCollapse, 
-  LogIn
+  LogIn,
+  MessageSquare
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
@@ -88,6 +90,7 @@ export function Navbar({ profile }: NavbarProps) {
               >
                 FAQ
               </Link>
+
 
               {role === 'seller' && (
                 <>
@@ -224,6 +227,7 @@ export function Navbar({ profile }: NavbarProps) {
             >
               FAQ
             </Link>
+
 
             {role === 'seller' && (
               <>

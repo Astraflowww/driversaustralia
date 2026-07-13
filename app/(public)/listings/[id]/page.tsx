@@ -6,6 +6,8 @@ import { BuyerResponseForm } from '@/components/listings/BuyerResponseForm'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowLeft, Calendar, Briefcase, User, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { StartChatButton } from '@/components/messaging/StartChatButton'
+import { formatShortDate } from '@/lib/utils'
 
 export const revalidate = 0
 
@@ -16,6 +18,7 @@ interface PageProps {
 export default async function ListingDetailPage({ params }: PageProps) {
   const { id } = await params
   const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
 
   // Fetch listing details + seller profiles
   const { data: listing } = await supabase
@@ -60,8 +63,6 @@ export default async function ListingDetailPage({ params }: PageProps) {
 
   // Double check status. If not approved, confirm if current user is owner or admin.
   if (listing.status !== 'approved') {
-    const { data: { user } } = await supabase.auth.getUser()
-    
     let isAuthorized = false
     if (user) {
       if (listing.seller_id === user.id) {
@@ -132,6 +133,17 @@ export default async function ListingDetailPage({ params }: PageProps) {
         </Link>
       </div>
 
+      {/* Listing Banner Image */}
+      {listing.image_url && (
+        <div className="relative w-full h-48 sm:h-72 md:h-[320px] rounded-xl overflow-hidden border border-border/50 bg-muted flex items-center justify-center">
+          <img
+            src={listing.image_url}
+            alt={listing.title}
+            className="w-full h-full object-contain"
+          />
+        </div>
+      )}
+
       <div className="grid gap-8 lg:grid-cols-12 items-start">
         {/* Left Side: Listing Details */}
         <div className="lg:col-span-7 space-y-6">
@@ -142,7 +154,7 @@ export default async function ListingDetailPage({ params }: PageProps) {
               </span>
               <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                 <Calendar className="h-3.5 w-3.5" />
-                Posted on {new Date(listing.created_at).toLocaleDateString()}
+                Posted on {formatShortDate(listing.created_at)}
               </span>
             </div>
             
@@ -181,6 +193,17 @@ export default async function ListingDetailPage({ params }: PageProps) {
                   </p>
                 </div>
               </CardContent>
+              {user && user.id !== listing.seller_id && (
+                <div className="px-5 pb-5 pt-1 border-t border-border/20 flex justify-end">
+                  <StartChatButton
+                    listingId={listing.id}
+                    otherUserId={listing.seller_id}
+                    label="Message Operator"
+                    variant="outline"
+                    className="w-full sm:w-auto"
+                  />
+                </div>
+              )}
             </Card>
           </div>
         </div>

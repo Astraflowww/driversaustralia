@@ -172,7 +172,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex flex-col lg:flex-row bg-[#f5f1ec] dark:bg-[#111111]">
+    <div className="login-page min-h-[calc(100vh-4rem)] flex flex-col lg:flex-row bg-[#f5f1ec] dark:bg-[#111111]">
       {/* Left visual column */}
       <div className="hidden lg:flex lg:w-5/12 bg-[#111111] text-white p-8 xl:p-12 flex-col justify-between relative overflow-hidden border-r border-border/10">
         {/* Glow effects */}
