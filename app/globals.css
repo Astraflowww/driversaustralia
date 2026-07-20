@@ -7,9 +7,22 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-geist-sans);
+  --font-sans: var(--font-public-sans), 'Public Sans', sans-serif;
+  --font-display: var(--font-oswald), 'Oswald', sans-serif;
+  --font-mono: var(--font-jetbrains-mono), 'JetBrains Mono', monospace;
+
+  --color-asphalt: #17191a;
+  --color-asphalt-2: #232624;
+  --color-asphalt-3: #2f322f;
+  --color-hwy-green: #0b5d38;
+  --color-hwy-green-dark: #073c25;
+  --color-hwy-green-light: #147a4a;
+  --color-amber: #ffb81c;
+  --color-amber-dark: #d99400;
+  --color-off-white: #f2efe6;
+  --color-ink: #15170f;
+  --color-muted-light: #b9bcb2;
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -88,41 +101,73 @@
 }
 
 :root {
-  --background: #f5f1ec; /* soft cream-white canvas */
-  --foreground: #111111; /* ink (charcoal) */
+  --asphalt: #17191a;
+  --asphalt-2: #232624;
+  --asphalt-3: #2f322f;
+  --hwy-green: #0b5d38;
+  --hwy-green-dark: #073c25;
+  --hwy-green-light: #147a4a;
+  --amber: #ffb81c;
+  --amber-dark: #d99400;
+  --off-white: #f2efe6;
+  --line-white: #ffffff;
+  --ink: #15170f;
+  --muted-text: #7b8079;
+  --muted-light: #b9bcb2;
+  --border-soft: rgba(242,239,230,0.12);
 
-  --card: #ffffff; /* surface-1 (pure white) */
-  --card-foreground: #111111;
+  --background: #f2efe6; /* warm off-white canvas from template.html */
+  --foreground: #15170f; /* ink */
+
+  --card: #ffffff;
+  --card-foreground: #15170f;
 
   --popover: #ffffff;
-  --popover-foreground: #111111;
+  --popover-foreground: #15170f;
 
-  --primary: #111111; /* ink is primary */
+  --primary: #0b5d38; /* hwy-green */
   --primary-foreground: #ffffff;
 
   --secondary: #ffffff;
-  --secondary-foreground: #111111;
+  --secondary-foreground: #15170f;
 
-  --muted: #ebe7e1; /* surface-2 */
-  --muted-foreground: #626260; /* ink-muted */
+  --muted: #e3ded0;
+  --muted-foreground: #7b8079;
 
-  --accent: #ffffff;
-  --accent-foreground: #111111;
+  --accent: #ffb81c;
+  --accent-foreground: #15170f;
 
-  --destructive: #c41c1c; /* semantic-error */
+  --destructive: #c41c1c;
   --destructive-foreground: #ffffff;
 
-  --border: #d3cec6; /* hairline */
-  --input: #d3cec6;
-  --ring: #111111;
+  --border: #ddd8ca;
+  --input: #ddd8ca;
+  --ring: #0b5d38;
 
-  --radius: 12px; /* rounded.lg */
+  --radius: 8px;
 
-  --fin-orange: #ff5600;
-  --brand-blue: #0007cb;
-  --surface-2: #ebe7e1;
-  --brand: 27 96% 61%;
-  --brand-foreground: 31 97% 72%;
+  --fin-orange: #0b5d38;
+  --surface-2: #e3ded0;
+}
+
+/* Highway Dashed Lane Divider */
+.lane {
+  height: 10px;
+  width: 100%;
+  background-image: repeating-linear-gradient(90deg, #ffffff 0 34px, transparent 34px 58px);
+  background-size: 92px 10px;
+  opacity: 0.9;
+  animation: drive 2.2s linear infinite;
+}
+.lane.dark {
+  background-image: repeating-linear-gradient(90deg, #3a3d38 0 34px, transparent 34px 58px);
+}
+@keyframes drive {
+  from { background-position-x: 0; }
+  to { background-position-x: -92px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lane { animation: none; }
 }
 
 .dark {

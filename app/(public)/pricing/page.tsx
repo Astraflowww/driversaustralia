@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function PricingPage() {
   return (
-    <main className="bg-[#f5f1ec] min-h-screen">
+    <main className="bg-[#f2efe6] min-h-screen">
       <PricingSection />
     </main>
   );

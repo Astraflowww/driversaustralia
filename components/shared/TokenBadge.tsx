@@ -20,7 +20,7 @@ export function TokenBadge({ tokens, className, showText = true }: TokenBadgePro
         "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border transition-all duration-200",
         isZero
           ? "bg-destructive/10 border-destructive/20 text-destructive"
-          : "bg-fin-orange/10 border-fin-orange/20 text-fin-orange",
+          : "bg-[#ffb81c]/20 border-[#ffb81c]/40 text-[#ffb81c]",
         className
       )}
     >
