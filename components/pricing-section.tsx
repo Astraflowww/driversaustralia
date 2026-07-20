@@ -28,7 +28,7 @@ const plans = [
     features: [
       {
         text: "3 Free Listing Tokens",
-        icon: <Briefcase size={18} className="text-[#ff5600]" />,
+        icon: <Briefcase size={18} className="text-[#0b5d38]" />,
       },
       { text: "Standard Job Postings", icon: <Database size={18} /> },
       { text: "Basic Driver Filtering", icon: <Server size={18} /> },
@@ -54,11 +54,11 @@ const plans = [
     features: [
       {
         text: "15 Listing Tokens",
-        icon: <Briefcase size={18} className="text-[#ff5600]" />,
+        icon: <Briefcase size={18} className="text-[#ffb81c]" />,
       },
       {
         text: "Featured Job Postings",
-        icon: <Sparkles size={18} className="text-[#ff5600]" />,
+        icon: <Sparkles size={18} className="text-[#ffb81c]" />,
       },
       { text: "Advanced Driver Search", icon: <Server size={18} /> },
     ],
@@ -82,7 +82,7 @@ const plans = [
     features: [
       {
         text: "40+ Listing Tokens",
-        icon: <Briefcase size={18} className="text-[#ff5600]" />,
+        icon: <Briefcase size={18} className="text-[#0b5d38]" />,
       },
       { text: "Bulk Job Import API", icon: <Database size={18} /> },
       { text: "Dedicated Support Queue", icon: <Server size={18} /> },

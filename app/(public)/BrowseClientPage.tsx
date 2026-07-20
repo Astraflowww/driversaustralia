@@ -66,15 +66,15 @@ export default function BrowseClientPage({ initialListings }: BrowseClientPagePr
       {/* Premium Hero Section */}
       <section className="relative overflow-hidden py-16 sm:py-24 border-b border-border/20 bg-surface-2/40">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
-          <span className="inline-flex items-center gap-1.5 rounded-md bg-fin-orange/10 border border-fin-orange/20 px-3.5 py-1 text-xs font-medium text-fin-orange">
+          <span className="inline-flex items-center gap-1.5 rounded-md bg-[#0b5d38]/10 border border-[#0b5d38]/20 px-3.5 py-1 text-xs font-semibold text-[#0b5d38]">
             <Sparkles className="h-3.5 w-3.5" />
             Explore Active Driver Openings
           </span>
 
-          <h1 className="text-4xl font-medium tracking-tight sm:text-6xl max-w-4xl mx-auto leading-tight text-foreground lg:tracking-[-1.4px]">
-            Connecting Talented Drivers with{' '}
-            <span className="text-fin-orange">
-              Transport Opportunities
+          <h1 className="text-4xl font-bold font-display uppercase tracking-tight sm:text-5xl max-w-4xl mx-auto leading-tight text-foreground">
+            Connecting Drivers with{' '}
+            <span className="text-[#0b5d38]">
+              Transport Runs
             </span>
           </h1>
 

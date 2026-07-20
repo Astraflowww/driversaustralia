@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import type { ComponentProps, ReactNode } from 'react';
+import { usePathname } from 'next/navigation';
 import { motion, useReducedMotion } from 'motion/react';
 import { Frame } from 'lucide-react';
 
@@ -84,49 +85,79 @@ const footerLinks: FooterSection[] = [
 ];
 
 export function Footer() {
+	const pathname = usePathname();
+
+	// Hide public footer on admin dashboard pages
+	if (pathname?.startsWith('/admin')) {
+		return null;
+	}
+
 	return (
-		<footer className="w-full rounded-t-[32px] md:rounded-t-[48px] border-t border-neutral-800 bg-[#0B0B0B] dark:bg-[#0B0B0B] text-neutral-200 py-12 lg:py-16">
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-				<div className="grid w-full gap-8 xl:grid-cols-3 xl:gap-8">
-					<AnimatedContainer className="space-y-4">
-						{/* Brand Logo in Footer */}
-						<div className="flex items-center gap-2 select-none">
-							<svg viewBox="0 0 100 100" className="h-8 w-8" fillRule="evenodd">
-								<rect width="100" height="100" rx="16" fill="#f0a500" />
-								<path d="M30 18h15c20 0 35 12 35 32s-15 32-35 32H30c-4.4 0-8-3.6-8-8V26c0-4.4 3.6-8 8-8zm13 14H35v36h8c11 0 19-7 19-18s-8-18-19-18z" fill="#ffffff" />
-							</svg>
-							<div className="flex flex-col leading-none">
-								<span className="text-[16px] font-bold tracking-[0.03em] text-[#f0a500] leading-[1.05]">DRIVERS</span>
-								<span className="text-[13px] font-black tracking-normal text-white leading-[1.05] mt-0.5">AUSTRALIA</span>
+		<footer className="w-full bg-[#17191a] text-[#b9bcb2] pt-12 pb-6 border-t border-[#2f322f]">
+			<div className="max-w-[1180px] mx-auto px-4 sm:px-7">
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 mb-10">
+					
+					{/* Brand Column */}
+					<div className="lg:col-span-4 space-y-4">
+						<div className="flex items-center gap-2.5 select-none">
+							<div className="shrink-0">
+								<svg viewBox="0 0 100 100" className="h-8 w-8" fillRule="evenodd">
+									<rect width="100" height="100" rx="16" fill="#f0a500" />
+									<path d="M30 18h15c20 0 35 12 35 32s-15 32-35 32H30c-4.4 0-8-3.6-8-8V26c0-4.4 3.6-8 8-8zm13 14H35v36h8c11 0 19-7 19-18s-8-18-19-18z" fill="#ffffff" />
+								</svg>
+							</div>
+							<div className="flex items-center">
+								<div className="flex flex-col leading-none">
+									<span className="text-[17px] font-bold tracking-[0.03em] text-[#f0a500] leading-[1.05]">DRIVERS</span>
+									<span className="text-[14px] font-black tracking-normal text-white leading-[1.05] mt-0.5">AUSTRALIA</span>
+								</div>
+								<div className="text-[8px] font-medium text-[#b9bcb2] self-stretch flex items-end pl-0.5 pb-[2px] select-none" style={{ writingMode: 'vertical-lr', transform: 'rotate(180deg)' }}>
+									.com.au
+								</div>
 							</div>
 						</div>
-						<p className="text-neutral-500 mt-8 text-sm md:mt-0">
-							© {new Date().getFullYear()} Drivers Australia. All rights reserved.
+						<p className="text-xs text-[#b9bcb2] leading-relaxed max-w-[280px]">
+							The job board built for the front seat — connecting Australian drivers with verified work, from local delivery to interstate linehaul.
 						</p>
-					</AnimatedContainer>
-
-					<div className="mt-10 grid grid-cols-2 gap-8 md:grid-cols-4 xl:col-span-2 xl:mt-0">
-						{footerLinks.map((section, index) => (
-							<AnimatedContainer key={section.label} delay={0.1 + index * 0.1}>
-								<div className="mb-10 md:mb-0">
-									<h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-400">{section.label}</h3>
-									<ul className="text-neutral-400 mt-4 space-y-2 text-sm">
-										{section.links.map((link) => (
-											<li key={link.title}>
-												<a
-													href={link.href}
-													className="hover:text-white inline-flex items-center transition-all duration-300"
-												>
-													{link.icon && <link.icon className="me-1.5 size-4 text-neutral-500" />}
-													{link.title}
-												</a>
-											</li>
-										))}
-									</ul>
-								</div>
-							</AnimatedContainer>
-						))}
 					</div>
+
+					{/* Navigation Columns */}
+					<div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-8">
+						<div>
+							<h4 className="font-display text-xs font-semibold uppercase tracking-wider text-[#f2efe6] mb-3">For Drivers</h4>
+							<ul className="space-y-2 text-xs">
+								<li><a href="/#jobs" className="hover:text-[#ffb81c] transition-colors">Browse Jobs</a></li>
+								<li><a href="/#vehicles" className="hover:text-[#ffb81c] transition-colors">Vehicle Types</a></li>
+								<li><a href="/faq" className="hover:text-[#ffb81c] transition-colors">Licence Guide</a></li>
+								<li><a href="/register?role=buyer" className="hover:text-[#ffb81c] transition-colors">Create Profile</a></li>
+							</ul>
+						</div>
+
+						<div>
+							<h4 className="font-display text-xs font-semibold uppercase tracking-wider text-[#f2efe6] mb-3">For Employers</h4>
+							<ul className="space-y-2 text-xs">
+								<li><a href="/register?role=seller" className="hover:text-[#ffb81c] transition-colors">Post a Job</a></li>
+								<li><a href="/pricing" className="hover:text-[#ffb81c] transition-colors">Pricing</a></li>
+								<li><a href="/login" className="hover:text-[#ffb81c] transition-colors">Verify Your Company</a></li>
+							</ul>
+						</div>
+
+						<div>
+							<h4 className="font-display text-xs font-semibold uppercase tracking-wider text-[#f2efe6] mb-3">Company</h4>
+							<ul className="space-y-2 text-xs">
+								<li><a href="/privacy" className="hover:text-[#ffb81c] transition-colors">Privacy Policy</a></li>
+								<li><a href="/terms" className="hover:text-[#ffb81c] transition-colors">Terms of Service</a></li>
+								<li><a href="/faq" className="hover:text-[#ffb81c] transition-colors">Contact Support</a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+				{/* Bottom Bar */}
+				<div className="pt-6 border-t border-[#2f322f] flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-[#7b8079]">
+					<span>© {new Date().getFullYear()} Drivers Australia. All rights reserved.</span>
+					<span>Made for the roads of AU 🇦🇺</span>
 				</div>
 			</div>
 		</footer>
